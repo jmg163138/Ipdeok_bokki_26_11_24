@@ -1,0 +1,584 @@
+
+/* =====================================
+   GLOBAL
+===================================== */
+
+
+a{
+    text-decoration: none;
+    color: #000000;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #ffffff;
+}
+
+button {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 전체 컨테이너 */
+.container {
+    width: 100%;
+    max-width: 500px;
+    min-height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+
+/* =====================================
+   HEADER
+===================================== */
+
+.header {
+    width: 100%;
+    height: 60px;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #ffffff;
+}
+
+/* 로고 */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 120px;
+    max-height: 40px;
+}
+
+/* 햄버거 메뉴 */
+.menu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    background: none;
+    color: #000000;
+}
+
+.menu-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 1.5;
+}
+
+
+/* =====================================
+   HERO SECTION
+===================================== */
+
+.hero {
+    width: 100%;
+    height: 500px;
+
+    background-color: #888888;
+
+    /* 추후 배경 이미지 적용 */
+    /* background-image: url('assets/images/hero.jpg'); */
+    /* background-size: cover; */
+    /* background-position: center; */
+}
+
+
+/* =====================================
+   SECTION 1 : ORDER BUTTONS
+===================================== */
+
+.section1 {
+    width: 100%;
+    padding: 13px 20px 70px;
+}
+
+.order-buttons {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.order-btn {
+    width: 100%;
+    height: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #888888;
+    color: #ffffff;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    border-radius: 12px;
+}
+
+.sub-order-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.sub-order-buttons .order-btn {
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* =====================================
+   COMMON SECTION TITLE
+===================================== */
+
+.section-title {
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 30px;
+    font-weight: 500;
+    color: #000000;
+}
+
+
+/* =====================================
+   COMMON HASHTAG BUTTON
+===================================== */
+
+.hashtag-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin-top: 15px;
+}
+
+.hashtag {
+    height: 35px;
+    padding: 0 13px;
+
+    border: 1px solid #cccccc;
+    border-radius: 30px;
+
+    background-color: transparent;
+    color: #838383;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    white-space: nowrap;
+}
+
+.hashtag.active {
+    background-color: #888888;
+    border-color: #888888;
+    color: #ffffff;
+}
+
+
+/* =====================================
+   SECTION 2 : RECOMMEND MENU
+===================================== */
+
+.section2 {
+    width: 100%;
+    padding: 50px 0 50px;
+
+    background-color: #d3d3d3;
+}
+
+.section2 .section-title {
+    padding: 0 20px;
+}
+
+.recommend-list {
+    position: relative;
+
+    width: 100%;
+    height: 545px;
+
+    margin-top: 90px;
+
+    overflow: hidden;
+}
+
+.recommend-card {
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    width: 68%;
+    height: 380px;
+
+    transform: translateX(-50%);
+
+    border-radius: 12px;
+    background-color: #888888;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: #ffffff;
+}
+
+.recommend-card:nth-child(1) {
+    left: calc(50% - 82%);
+}
+
+.recommend-card:nth-child(2) {
+    left: 50%;
+    z-index: 2;
+}
+
+.recommend-card:nth-child(3) {
+    left: calc(50% + 82%);
+}
+
+.recommend-info {
+    width: 100%;
+    padding-top: 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+}
+
+.recommend-info span {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.recommend-info p {
+    margin-top: 2px;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.recommend-info button {
+    height: 26px;
+    padding: 0 18px;
+    margin-top: 10px;
+
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+
+    background-color: transparent;
+    color: #ffffff;
+
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.recommend-image {
+    position: absolute;
+    bottom: -80px;
+    left: 50%;
+
+    width: 216px;
+    height: 216px;
+
+    transform: translateX(-50%);
+
+    background-color: #292929;
+}
+
+
+/* =====================================
+   SECTION 3 : MENU
+===================================== */
+
+.section3 {
+    width: 100%;
+    padding: 35px 20px 65px;
+
+    background-color: #ffffff;
+}
+
+.menu-list {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+    row-gap: 20px;
+
+    margin-top: 25px;
+}
+
+.menu-card {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    border-radius: 12px;
+    background-color: #888888;
+}
+
+.menu-card p {
+    margin-top: 5px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+}
+
+
+/* =====================================
+   SECTION 4 : EVENT
+===================================== */
+
+.section4 {
+    width: 100%;
+    padding: 35px 0 70px;
+
+    background-color: #ffffff;
+}
+
+.section4 .section-title {
+    padding: 0 20px;
+}
+
+/* 이벤트 설명 */
+.event-description {
+    margin-top: 5px;
+
+    text-align: center;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: #838383;
+}
+
+
+/* =====================================
+   EVENT TABS
+===================================== */
+
+.event-tabs {
+    width: 100%;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    margin-top: 15px;
+
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.event-tab {
+    flex: 1;
+    height: 100%;
+
+    background-color: #ffffff;
+    color: #838383;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.event-tab.active {
+    color: #000000;
+    font-weight: 700;
+}
+
+
+/* =====================================
+   EVENT CONTENT
+===================================== */
+
+.event-list {
+    width: 100%;
+    padding: 20px;
+}
+
+.event-card {
+    width: 100%;
+
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.event-image {
+    width: 100%;
+    aspect-ratio: 1.5 / 1;
+
+    background-color: #888888;
+}
+
+.event-info {
+    padding: 10px;
+}
+
+.event-subtitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #555555;
+}
+
+.event-title {
+    margin-top: 3px;
+
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+
+    line-height: 1.5;
+}
+
+.event-date {
+    margin-top: 18px;
+
+    font-size: 14px;
+    font-weight: 300;
+    color: #555555;
+}
+
+/* =====================================
+   SIDE MENU : OVERLAY
+===================================== */
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100dvh;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    z-index: 1000;
+
+    transition: opacity 0.3s ease,
+                visibility 0.3s ease;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+/* =====================================
+   SIDE MENU : RIGHT SLIDE
+===================================== */
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    width: min(66.666vw, 333px);
+    height: 100dvh;
+
+    padding: 40px 24px;
+
+    background-color: #ffffff;
+
+    z-index: 1001;
+
+    /* 처음에는 완전히 숨김 */
+    transform: translate3d(100%, 0, 0);
+
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: transform 0.3s ease,
+                visibility 0.3s ease;
+
+    overflow-y: auto;
+}
+
+/* 메뉴 버튼 클릭 시 표시 */
+.side-menu.active {
+    transform: translate3d(0, 0, 0);
+
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+/* =====================================
+   SIDE MENU : LIST
+===================================== */
+
+.side-menu-list {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    list-style: none;
+}
+
+.side-menu-list li {
+    width: 100%;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.side-menu-list a {
+    width: 100%;
+    min-height: 65px;
+
+    display: flex;
+    align-items: center;
+
+    color: #000000;
+
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+/* =====================================
+   BODY SCROLL CONTROL
+===================================== */
+
+body.menu-open {
+    overflow: hidden;
+}
