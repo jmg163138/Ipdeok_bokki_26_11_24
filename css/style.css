@@ -55,6 +55,19 @@ img {
   box-shadow: 0 0 24px rgba(230, 57, 38, 0.06);
 }
 
+/* 메인페이지 배경색 통일 */
+.app-container.home-page {
+  background-color: var(--bg-surface);
+}
+
+.app-container.home-page .header,
+.app-container.home-page .section1,
+.app-container.home-page .section2,
+.app-container.home-page .section3,
+.app-container.home-page .site-footer {
+  background-color: var(--bg-surface);
+}
+
 /* 공통 섹션 타이틀 (30px / 미디움) */
 .section-title {
   font-size: 30px;
@@ -88,12 +101,14 @@ img {
 .logo {
   display: flex;
   align-items: center;
-  height: 32px;
+  height: 42px;
+  max-width: 150px;
 }
 
 .logo img {
   width: auto;
   height: 100%;
+  max-width: 150px;
   object-fit: contain;
 }
 
@@ -210,21 +225,46 @@ img {
   color: var(--text-main);
 }
 
+.drawer-user-header {
+  margin-top: 12px;
+  padding: 14px 12px;
+  border-radius: 12px;
+  background-color: var(--bg-section-warm);
+  border: 1px solid var(--border-warm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-sub);
+  line-height: 1.4;
+}
+
+.drawer-user-header.logged-in {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--brand-red);
+}
+
 .drawer-menu {
   list-style: none;
-  margin-top: 20px;
+  margin-top: 12px;
 }
 
 .drawer-menu li {
   border-bottom: 1px solid var(--border-warm);
 }
 
-.drawer-menu li a {
+.drawer-menu li a,
+.drawer-menu li .drawer-logout-btn {
   display: block;
+  width: 100%;
+  text-align: left;
   padding: 18px 4px;
   font-size: 18px;
   font-weight: 500;
   color: var(--text-main);
+}
+
+.drawer-menu li .drawer-logout-btn:hover {
+  color: var(--brand-red);
 }
 
 /* Hero 섹션 (1344 x 756 비율 기준, 뒷배경 제거, 모서리 둥글게) */
@@ -522,6 +562,54 @@ img {
 .quick-cart-btn:hover {
   background-color: var(--brand-red);
   color: #ffffff;
+}
+
+/* 메인페이지 풋터 */
+.site-footer {
+  padding: 28px 20px 36px;
+  border-top: 1px solid var(--border-warm);
+  background-color: var(--bg-surface);
+  color: var(--text-sub);
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-sub);
+}
+
+.footer-links a:hover {
+  color: var(--brand-red);
+}
+
+.footer-info {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-sub);
+}
+
+.footer-copy {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-sub);
 }
 
 /* 서브페이지 공통 레이아웃 */

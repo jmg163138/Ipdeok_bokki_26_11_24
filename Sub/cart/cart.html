@@ -32,11 +32,12 @@
             <i data-lucide="x"></i>
           </button>
         </div>
+        <div class="drawer-user-header" id="drawerUserInfo">로그인하고 더 편하게 주문해보세요</div>
         <ul class="drawer-menu">
-          <li><a href="../lists/lists.html">떡볶이 메뉴</a></li>
+          <li><a href="../lists/list.html">떡볶이 메뉴</a></li>
           <li><a href="../about/about.html">소개</a></li>
           <li><a href="../community/community.html">커뮤니티</a></li>
-          <li><a href="../login/login.html">로그인</a></li>
+          <li id="drawerAuthItem"><a href="../login/login.html" id="drawerAuthLink">로그인</a></li>
         </ul>
       </div>
     </nav>
@@ -44,7 +45,7 @@
     <main class="sub-main cart-main">
       <div id="cartListArea"></div>
 
-      <!-- 메뉴 더 담으러 가기 -> 떡볶이 메뉴 화면 (sub/lists/lists.html) -->
+      <!-- 메뉴 더 담으러 가기 -> 떡볶이 메뉴 화면 -->
       <div class="add-more-wrap">
         <a href="../lists/list.html" class="add-more-btn" id="addMoreMenuBtn">+ 메뉴 더 담으러 가기</a>
       </div>
@@ -64,15 +65,49 @@
         </div>
       </div>
 
-      <!-- 결제하기 -> 결제 화면 (sub/payment/payment.html) -->
+      <!-- 결제하기 -> 결제 화면 -->
       <div class="bottom-fixed-bar">
         <a href="../payment/payments.html" class="primary-action-btn full" id="goCheckoutBtn">결제하기</a>
       </div>
     </main>
+
+    <div class="toast-msg" id="toastMsg">로그아웃되었습니다.</div>
   </div>
 
   <script>
     lucide.createIcons();
+
+    function getLoggedInUser() {
+      return JSON.parse(localStorage.getItem('tteokbokki_user') || 'null');
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    function renderDrawerAuthState() {
+      const user = getLoggedInUser();
+      const drawerUserInfo = document.getElementById('drawerUserInfo');
+      const drawerAuthItem = document.getElementById('drawerAuthItem');
+
+      if (user && user.id) {
+        drawerUserInfo.textContent = `${user.id}님`;
+        drawerUserInfo.classList.add('logged-in');
+        drawerAuthItem.innerHTML = '<button type="button" class="drawer-logout-btn" id="drawerLogoutBtn">로그아웃</button>';
+        document.getElementById('drawerLogoutBtn').addEventListener('click', () => {
+          localStorage.removeItem('tteokbokki_user');
+          renderDrawerAuthState();
+          showToast('로그아웃되었습니다.');
+        });
+      } else {
+        drawerUserInfo.textContent = '로그인하고 더 편하게 주문해보세요';
+        drawerUserInfo.classList.remove('logged-in');
+        drawerAuthItem.innerHTML = '<a href="../login/login.html" id="drawerAuthLink">로그인</a>';
+      }
+    }
 
     function getCart() {
       return JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
@@ -179,6 +214,7 @@
     const drawerOverlay = document.getElementById('drawerOverlay');
 
     menuOpenBtn.addEventListener('click', () => {
+      renderDrawerAuthState();
       sideDrawer.classList.add('open');
       drawerOverlay.classList.add('open');
     });
@@ -191,6 +227,7 @@
       drawerOverlay.classList.remove('open');
     });
 
+    renderDrawerAuthState();
     renderCart();
   </script>
 </body>

@@ -4,24 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>입덕볶이 - 메인 페이지</title>
-  <!-- Noto Sans KR 폰트 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-  <!-- 스타일시트 연결 -->
   <link rel="stylesheet" href="css/style.css">
-  <!-- Lucide 아이콘 -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-  <div class="app-container">
+  <div class="app-container home-page">
     <!-- 헤더 -->
     <header class="header">
       <a href="index.html" class="logo">
         <img src="img/로고.png" alt="LOGO">
       </a>
       <div class="header-actions">
-        <a href="sub/cart/cart.html" class="cart-btn" aria-label="장바구니">
+        <a href="Sub/cart/cart.html" class="cart-btn" aria-label="장바구니">
           <i data-lucide="shopping-cart"></i>
           <span class="cart-badge" id="cartBadge">0</span>
         </a>
@@ -40,11 +37,12 @@
             <i data-lucide="x"></i>
           </button>
         </div>
+        <div class="drawer-user-header" id="drawerUserInfo">로그인하고 더 편하게 주문해보세요</div>
         <ul class="drawer-menu">
           <li><a href="Sub/lists/list.html">떡볶이 메뉴</a></li>
-          <li><a href="sub/about/about.html">소개</a></li>
-          <li><a href="sub/community/community.html">커뮤니티</a></li>
-          <li><a href="sub/login/login.html">로그인</a></li>
+          <li><a href="Sub/about/about.html">소개</a></li>
+          <li><a href="Sub/community/community.html">커뮤니티</a></li>
+          <li id="drawerAuthItem"><a href="Sub/login/login.html" id="drawerAuthLink">로그인</a></li>
         </ul>
       </div>
     </nav>
@@ -68,10 +66,10 @@
 
       <!-- Section 1: 주문 버튼 영역 (높이 80px, 20px 미디움) -->
       <section class="section1">
-        <a href="sub/lists/lists.html?type=delivery" class="order-btn full-btn">배달</a>
+        <a href="Sub/lists/list.html?type=delivery" class="order-btn full-btn">배달</a>
         <div class="order-btn-row">
-          <a href="sub/lists/lists.html?type=pickup" class="order-btn sub-order-btn">포장</a>
-          <a href="sub/cart/cart.html" class="order-btn accent-order-btn">쿠폰</a>
+          <a href="Sub/lists/list.html?type=pickup" class="order-btn sub-order-btn">포장</a>
+          <a href="Sub/cart/cart.html" class="order-btn accent-order-btn">쿠폰</a>
         </div>
       </section>
 
@@ -113,7 +111,7 @@
             <!-- 탭 1: 떡볶이 (4개) -->
             <div class="menu-grid">
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m1" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m1" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu1.jpg" alt="오리지널 입덕볶이">
                   </div>
@@ -122,7 +120,7 @@
                 <button type="button" class="quick-cart-btn" data-id="m1" data-name="오리지널 입덕볶이" data-price="14000" data-img="img/menu1.jpg">장바구니 담기</button>
               </div>
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m2" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m2" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu2.jpg" alt="로제 입덕볶이">
                   </div>
@@ -131,7 +129,7 @@
                 <button type="button" class="quick-cart-btn" data-id="m2" data-name="로제 입덕볶이" data-price="16000" data-img="img/menu2.jpg">장바구니 담기</button>
               </div>
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m3" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m3" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu3.jpg" alt="마라 입덕볶이">
                   </div>
@@ -140,7 +138,7 @@
                 <button type="button" class="quick-cart-btn" data-id="m3" data-name="마라 입덕볶이" data-price="17000" data-img="img/menu3.jpg">장바구니 담기</button>
               </div>
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m4" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m4" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu4.jpg" alt="치즈폭탄 입덕볶이">
                   </div>
@@ -153,7 +151,7 @@
             <!-- 탭 2: 사이드 (4개) -->
             <div class="menu-grid">
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m5" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m5" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu2-1.jpg" alt="모듬 튀김 세트">
                   </div>
@@ -162,7 +160,7 @@
                 <button type="button" class="quick-cart-btn" data-id="m5" data-name="모듬 튀김 세트" data-price="6500" data-img="img/menu2-1.jpg">장바구니 담기</button>
               </div>
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m6" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m6" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu2-2.jpg" alt="순대 & 내장">
                   </div>
@@ -171,7 +169,7 @@
                 <button type="button" class="quick-cart-btn" data-id="m6" data-name="순대 & 내장" data-price="5000" data-img="img/menu2-2.jpg">장바구니 담기</button>
               </div>
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m7" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m7" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu2-3.jpg" alt="스팸 참치 주먹밥">
                   </div>
@@ -180,7 +178,7 @@
                 <button type="button" class="quick-cart-btn" data-id="m7" data-name="스팸 참치 주먹밥" data-price="4500" data-img="img/menu2-3.jpg">장바구니 담기</button>
               </div>
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m8" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m8" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu2-4.jpg" alt="바삭 야끼만두">
                   </div>
@@ -193,7 +191,7 @@
             <!-- 탭 3: 세트 메뉴 (4개) -->
             <div class="menu-grid">
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m9" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m9" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu3-1.jpg" alt="입덕 2인 커플 세트">
                   </div>
@@ -202,7 +200,7 @@
                 <button type="button" class="quick-cart-btn" data-id="m9" data-name="입덕 2인 커플 세트" data-price="23000" data-img="img/menu3-1.jpg">장바구니 담기</button>
               </div>
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m10" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m10" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu3-2.jpg" alt="로제 & 튀김 세트">
                   </div>
@@ -211,7 +209,7 @@
                 <button type="button" class="quick-cart-btn" data-id="m10" data-name="로제 & 튀김 세트" data-price="24500" data-img="img/menu3-2.jpg">장바구니 담기</button>
               </div>
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m11" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m11" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu3-3.jpg" alt="마라 & 주먹밥 세트">
                   </div>
@@ -220,7 +218,7 @@
                 <button type="button" class="quick-cart-btn" data-id="m11" data-name="마라 & 주먹밥 세트" data-price="22500" data-img="img/menu3-3.jpg">장바구니 담기</button>
               </div>
               <div class="menu-item">
-                <a href="sub/detail/detail.html?id=m12" class="menu-link">
+                <a href="Sub/detail/detail.html?id=m12" class="menu-link">
                   <div class="menu-thumb">
                     <img src="img/menu3-4.jpg" alt="입덕 패밀리 파티 세트">
                   </div>
@@ -234,11 +232,51 @@
       </section>
     </main>
 
+    <!-- 메인페이지 풋터 -->
+    <footer class="site-footer">
+      <div class="footer-top">
+        <strong class="footer-brand">입덕볶이</strong>
+        <div class="footer-links">
+          <a href="Sub/about/about.html">소개</a>
+          <a href="Sub/lists/list.html">메뉴</a>
+          <a href="Sub/community/community.html">커뮤니티</a>
+          <a href="Sub/login/login.html">로그인</a>
+        </div>
+      </div>
+      <p class="footer-info">운영시간: 매일 11:00 ~ 23:00 | 문의: 02-1234-5678</p>
+      <p class="footer-copy">© 2026 입덕볶이. All rights reserved.</p>
+    </footer>
+
     <div class="toast-msg" id="toastMsg">장바구니에 담겼습니다.</div>
   </div>
 
   <script>
     lucide.createIcons();
+
+    function getLoggedInUser() {
+      return JSON.parse(localStorage.getItem('tteokbokki_user') || 'null');
+    }
+
+    function renderDrawerAuthState() {
+      const user = getLoggedInUser();
+      const drawerUserInfo = document.getElementById('drawerUserInfo');
+      const drawerAuthItem = document.getElementById('drawerAuthItem');
+
+      if (user && user.id) {
+        drawerUserInfo.textContent = `${user.id}님`;
+        drawerUserInfo.classList.add('logged-in');
+        drawerAuthItem.innerHTML = '<button type="button" class="drawer-logout-btn" id="drawerLogoutBtn">로그아웃</button>';
+        document.getElementById('drawerLogoutBtn').addEventListener('click', () => {
+          localStorage.removeItem('tteokbokki_user');
+          renderDrawerAuthState();
+          showToast('로그아웃되었습니다.');
+        });
+      } else {
+        drawerUserInfo.textContent = '로그인하고 더 편하게 주문해보세요';
+        drawerUserInfo.classList.remove('logged-in');
+        drawerAuthItem.innerHTML = '<a href="Sub/login/login.html" id="drawerAuthLink">로그인</a>';
+      }
+    }
 
     function getCart() {
       return JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
@@ -296,6 +334,7 @@
     });
 
     updateCartBadge();
+    renderDrawerAuthState();
 
     // 1. 햄버거 메뉴 슬라이드 제어
     const menuOpenBtn = document.getElementById('menuOpenBtn');
@@ -304,6 +343,7 @@
     const drawerOverlay = document.getElementById('drawerOverlay');
 
     function openMenu() {
+      renderDrawerAuthState();
       sideDrawer.classList.add('open');
       drawerOverlay.classList.add('open');
       menuOpenBtn.setAttribute('aria-expanded', 'true');
@@ -339,19 +379,19 @@
     // 3. 추천메뉴 해시태그 전환 및 좌우 슬라이드
     const recommendData = {
       tag1: [
-        { id: 'm1', badge: 'BEST 1', title: '오리지널 입덕볶이', img: 'img/recommend1.jpg', link: 'sub/detail/detail.html?id=m1' },
-        { id: 'm3', badge: 'BEST 2', title: '마라 입덕볶이', img: 'img/recommend2.jpg', link: 'sub/detail/detail.html?id=m3' },
-        { id: 'm4', badge: 'BEST 3', title: '치즈폭탄 입덕볶이', img: 'img/recommend3.jpg', link: 'sub/detail/detail.html?id=m4' }
+        { id: 'm1', badge: 'BEST 1', title: '오리지널 입덕볶이', img: 'img/recommend1.jpg', link: 'Sub/detail/detail.html?id=m1' },
+        { id: 'm3', badge: 'BEST 2', title: '마라 입덕볶이', img: 'img/recommend2.jpg', link: 'Sub/detail/detail.html?id=m3' },
+        { id: 'm4', badge: 'BEST 3', title: '치즈폭탄 입덕볶이', img: 'img/recommend3.jpg', link: 'Sub/detail/detail.html?id=m4' }
       ],
       tag2: [
-        { id: 'm2', badge: 'PICK 1', title: '로제 입덕볶이', img: 'img/recommend2.jpg', link: 'sub/detail/detail.html?id=m2' },
-        { id: 'm10', badge: 'PICK 2', title: '로제 & 튀김 세트', img: 'img/recommend3.jpg', link: 'sub/detail/detail.html?id=m10' },
-        { id: 'm9', badge: 'PICK 3', title: '입덕 2인 커플 세트', img: 'img/recommend1.jpg', link: 'sub/detail/detail.html?id=m9' }
+        { id: 'm2', badge: 'PICK 1', title: '로제 입덕볶이', img: 'img/recommend2.jpg', link: 'Sub/detail/detail.html?id=m2' },
+        { id: 'm10', badge: 'PICK 2', title: '로제 & 튀김 세트', img: 'img/recommend3.jpg', link: 'Sub/detail/detail.html?id=m10' },
+        { id: 'm9', badge: 'PICK 3', title: '입덕 2인 커플 세트', img: 'img/recommend1.jpg', link: 'Sub/detail/detail.html?id=m9' }
       ],
       tag3: [
-        { id: 'm5', badge: 'HOT 1', title: '모듬 튀김 세트', img: 'img/recommend3.jpg', link: 'sub/detail/detail.html?id=m5' },
-        { id: 'm7', badge: 'HOT 2', title: '스팸 참치 주먹밥', img: 'img/recommend1.jpg', link: 'sub/detail/detail.html?id=m7' },
-        { id: 'm12', badge: 'HOT 3', title: '입덕 패밀리 파티 세트', img: 'img/recommend2.jpg', link: 'sub/detail/detail.html?id=m12' }
+        { id: 'm5', badge: 'HOT 1', title: '모듬 튀김 세트', img: 'img/recommend3.jpg', link: 'Sub/detail/detail.html?id=m5' },
+        { id: 'm7', badge: 'HOT 2', title: '스팸 참치 주먹밥', img: 'img/recommend1.jpg', link: 'Sub/detail/detail.html?id=m7' },
+        { id: 'm12', badge: 'HOT 3', title: '입덕 패밀리 파티 세트', img: 'img/recommend2.jpg', link: 'Sub/detail/detail.html?id=m12' }
       ]
     };
 

@@ -38,11 +38,12 @@
             <i data-lucide="x"></i>
           </button>
         </div>
+        <div class="drawer-user-header" id="drawerUserInfo">로그인하고 더 편하게 주문해보세요</div>
         <ul class="drawer-menu">
-          <li><a href="../lists/lists.html">떡볶이 메뉴</a></li>
+          <li><a href="../lists/list.html">떡볶이 메뉴</a></li>
           <li><a href="about.html">소개</a></li>
           <li><a href="../community/community.html">커뮤니티</a></li>
-          <li><a href="../login/login.html">로그인</a></li>
+          <li id="drawerAuthItem"><a href="../login/login.html" id="drawerAuthLink">로그인</a></li>
         </ul>
       </div>
     </nav>
@@ -73,12 +74,46 @@
         </div>
       </div>
 
-      <a href="../lists/lists.html" class="primary-action-btn full">메뉴 보러가기</a>
+      <a href="../lists/list.html" class="primary-action-btn full">메뉴 보러가기</a>
     </main>
+
+    <div class="toast-msg" id="toastMsg">로그아웃되었습니다.</div>
   </div>
 
   <script>
     lucide.createIcons();
+
+    function getLoggedInUser() {
+      return JSON.parse(localStorage.getItem('tteokbokki_user') || 'null');
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    function renderDrawerAuthState() {
+      const user = getLoggedInUser();
+      const drawerUserInfo = document.getElementById('drawerUserInfo');
+      const drawerAuthItem = document.getElementById('drawerAuthItem');
+
+      if (user && user.id) {
+        drawerUserInfo.textContent = `${user.id}님`;
+        drawerUserInfo.classList.add('logged-in');
+        drawerAuthItem.innerHTML = '<button type="button" class="drawer-logout-btn" id="drawerLogoutBtn">로그아웃</button>';
+        document.getElementById('drawerLogoutBtn').addEventListener('click', () => {
+          localStorage.removeItem('tteokbokki_user');
+          renderDrawerAuthState();
+          showToast('로그아웃되었습니다.');
+        });
+      } else {
+        drawerUserInfo.textContent = '로그인하고 더 편하게 주문해보세요';
+        drawerUserInfo.classList.remove('logged-in');
+        drawerAuthItem.innerHTML = '<a href="../login/login.html" id="drawerAuthLink">로그인</a>';
+      }
+    }
 
     const cart = JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
     const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -94,6 +129,7 @@
     const drawerOverlay = document.getElementById('drawerOverlay');
 
     menuOpenBtn.addEventListener('click', () => {
+      renderDrawerAuthState();
       sideDrawer.classList.add('open');
       drawerOverlay.classList.add('open');
     });
@@ -105,6 +141,8 @@
       sideDrawer.classList.remove('open');
       drawerOverlay.classList.remove('open');
     });
+
+    renderDrawerAuthState();
   </script>
 </body>
 </html>

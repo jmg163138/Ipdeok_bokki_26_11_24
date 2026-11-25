@@ -38,11 +38,12 @@
             <i data-lucide="x"></i>
           </button>
         </div>
+        <div class="drawer-user-header" id="drawerUserInfo">로그인 하면 혜택을 줍니다</div>
         <ul class="drawer-menu">
-          <li><a href="../lists/lists.html">떡볶이 메뉴</a></li>
+          <li><a href="../lists/list.html">떡볶이 메뉴</a></li>
           <li><a href="../about/about.html">소개</a></li>
           <li><a href="../community/community.html">커뮤니티</a></li>
-          <li><a href="../login/login.html">로그인</a></li>
+          <li id="drawerAuthItem"><a href="../login/login.html" id="drawerAuthLink">로그인</a></li>
         </ul>
       </div>
     </nav>
@@ -87,6 +88,38 @@
 
   <script>
     lucide.createIcons();
+
+    function getLoggedInUser() {
+      return JSON.parse(localStorage.getItem('tteokbokki_user') || 'null');
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    function renderDrawerAuthState() {
+      const user = getLoggedInUser();
+      const drawerUserInfo = document.getElementById('drawerUserInfo');
+      const drawerAuthItem = document.getElementById('drawerAuthItem');
+
+      if (user && user.id) {
+        drawerUserInfo.textContent = `${user.id}님`;
+        drawerUserInfo.classList.add('logged-in');
+        drawerAuthItem.innerHTML = '<button type="button" class="drawer-logout-btn" id="drawerLogoutBtn">로그아웃</button>';
+        document.getElementById('drawerLogoutBtn').addEventListener('click', () => {
+          localStorage.removeItem('tteokbokki_user');
+          renderDrawerAuthState();
+          showToast('로그아웃되었습니다.');
+        });
+      } else {
+        drawerUserInfo.textContent = '로그인 하면 혜택을 줍니다';
+        drawerUserInfo.classList.remove('logged-in');
+        drawerAuthItem.innerHTML = '<a href="../login/login.html" id="drawerAuthLink">로그인</a>';
+      }
+    }
 
     const menuCatalog = {
       m1: { id: 'm1', name: '오리지널 입덕볶이', desc: '매콤달콤 기본 대표 떡볶이', price: 14000, img: '../../img/menu1.jpg' },
@@ -172,14 +205,12 @@
 
     document.getElementById('addCartBtn').addEventListener('click', () => {
       pushItemToCart();
-      const toast = document.getElementById('toastMsg');
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 1800);
+      showToast('장바구니에 담겼습니다.');
     });
 
     document.getElementById('directOrderBtn').addEventListener('click', () => {
       pushItemToCart();
-      window.location.href = '../payment/payment.html';
+      window.location.href = '../payment/payments.html';
     });
 
     const menuOpenBtn = document.getElementById('menuOpenBtn');
@@ -188,6 +219,7 @@
     const drawerOverlay = document.getElementById('drawerOverlay');
 
     menuOpenBtn.addEventListener('click', () => {
+      renderDrawerAuthState();
       sideDrawer.classList.add('open');
       drawerOverlay.classList.add('open');
     });
@@ -201,6 +233,7 @@
     });
 
     updateCartBadge();
+    renderDrawerAuthState();
   </script>
 </body>
 </html>

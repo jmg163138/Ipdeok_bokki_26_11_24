@@ -62,8 +62,6 @@
         </form>
 
         <p class="login-status-msg" id="findStatusMsg"></p>
-
-        <button type="button" class="sub-action-btn full auth-back-login-btn" data-back-login>로그인 화면으로 돌아가기</button>
       </section>
 
       <!-- 3. 회원가입 화면 -->
@@ -88,8 +86,6 @@
         </form>
 
         <p class="login-status-msg" id="signupStatusMsg"></p>
-
-        <button type="button" class="sub-action-btn full auth-back-login-btn" data-back-login>로그인 화면으로 돌아가기</button>
       </section>
     </main>
   </div>
@@ -134,12 +130,6 @@
       switchAuthView('signup');
     });
 
-    document.querySelectorAll('[data-back-login]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        switchAuthView('login');
-      });
-    });
-
     loginBackBtn.addEventListener('click', (e) => {
       if (currentAuthView !== 'login') {
         e.preventDefault();
@@ -151,6 +141,7 @@
       e.preventDefault();
       const idVal = document.getElementById('userId').value.trim();
       const msgEl = document.getElementById('loginStatusMsg');
+      localStorage.setItem('tteokbokki_user', JSON.stringify({ id: idVal }));
       msgEl.textContent = `${idVal}님, 환영합니다! 메인 페이지로 이동합니다.`;
       setTimeout(() => {
         window.location.href = '../../index.html';
