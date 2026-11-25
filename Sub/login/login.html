@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입덕볶이 - 로그인</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- 뒤로가기: 로그인 화면에서는 메인 페이지로, 찾기/회원가입 화면에서는 로그인 화면으로 -->
+    <header class="header">
+      <a href="../../index.html" class="icon-btn" id="loginBackBtn" aria-label="뒤로가기">
+        <i data-lucide="chevron-left"></i>
+      </a>
+      <h1 class="header-title" id="authHeaderTitle">로그인</h1>
+      <div style="width: 28px;"></div>
+    </header>
+
+    <main class="sub-main login-main">
+      <!-- 1. 로그인 화면 -->
+      <section class="login-box" id="loginView">
+        <h2 class="login-heading">입덕볶이 회원 로그인</h2>
+        <p class="login-sub">아이디와 비밀번호를 입력해 주세요.</p>
+
+        <form id="loginForm">
+          <label class="input-label" for="userId">아이디</label>
+          <input type="text" id="userId" class="form-input" placeholder="아이디를 입력하세요" required>
+
+          <label class="input-label" for="userPw">비밀번호</label>
+          <input type="password" id="userPw" class="form-input" placeholder="비밀번호를 입력하세요" required>
+
+          <button type="submit" class="primary-action-btn full login-submit-btn">로그인</button>
+        </form>
+
+        <div class="auth-sub-actions">
+          <button type="button" class="auth-link-btn" id="openFindViewBtn">아이디/비밀번호 찾기</button>
+          <span class="auth-divider">|</span>
+          <button type="button" class="auth-link-btn" id="openSignupViewBtn">회원가입</button>
+        </div>
+
+        <p class="login-status-msg" id="loginStatusMsg"></p>
+      </section>
+
+      <!-- 2. 아이디/비밀번호 찾기 화면 -->
+      <section class="login-box" id="findView" style="display: none;">
+        <h2 class="login-heading">아이디/비밀번호 찾기</h2>
+        <p class="login-sub">가입 시 등록한 이름과 이메일을 입력해 주세요.</p>
+
+        <form id="findForm">
+          <label class="input-label" for="findName">이름</label>
+          <input type="text" id="findName" class="form-input" placeholder="이름을 입력하세요" required>
+
+          <label class="input-label" for="findEmail">이메일</label>
+          <input type="email" id="findEmail" class="form-input" placeholder="이메일을 입력하세요 (예: user@example.com)" required>
+
+          <button type="submit" class="primary-action-btn full login-submit-btn">찾기 확인</button>
+        </form>
+
+        <p class="login-status-msg" id="findStatusMsg"></p>
+
+        <button type="button" class="sub-action-btn full auth-back-login-btn" data-back-login>로그인 화면으로 돌아가기</button>
+      </section>
+
+      <!-- 3. 회원가입 화면 -->
+      <section class="login-box" id="signupView" style="display: none;">
+        <h2 class="login-heading">회원가입</h2>
+        <p class="login-sub">입덕볶이에서 사용할 회원 정보를 입력해 주세요.</p>
+
+        <form id="signupForm">
+          <label class="input-label" for="signupId">아이디</label>
+          <input type="text" id="signupId" class="form-input" placeholder="아이디를 입력하세요" required>
+
+          <label class="input-label" for="signupPw">비밀번호</label>
+          <input type="password" id="signupPw" class="form-input" placeholder="비밀번호를 입력하세요" required>
+
+          <label class="input-label" for="signupPwConfirm">비밀번호 확인</label>
+          <input type="password" id="signupPwConfirm" class="form-input" placeholder="비밀번호를 한 번 더 입력하세요" required>
+
+          <label class="input-label" for="signupName">이름</label>
+          <input type="text" id="signupName" class="form-input" placeholder="이름을 입력하세요" required>
+
+          <button type="submit" class="primary-action-btn full login-submit-btn">회원가입 완료</button>
+        </form>
+
+        <p class="login-status-msg" id="signupStatusMsg"></p>
+
+        <button type="button" class="sub-action-btn full auth-back-login-btn" data-back-login>로그인 화면으로 돌아가기</button>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const loginView = document.getElementById('loginView');
+    const findView = document.getElementById('findView');
+    const signupView = document.getElementById('signupView');
+    const authHeaderTitle = document.getElementById('authHeaderTitle');
+    const loginBackBtn = document.getElementById('loginBackBtn');
+
+    let currentAuthView = 'login';
+
+    function switchAuthView(viewName) {
+      currentAuthView = viewName;
+
+      loginView.style.display = viewName === 'login' ? 'block' : 'none';
+      findView.style.display = viewName === 'find' ? 'block' : 'none';
+      signupView.style.display = viewName === 'signup' ? 'block' : 'none';
+
+      if (viewName === 'login') {
+        authHeaderTitle.textContent = '로그인';
+        loginBackBtn.href = '../../index.html';
+      } else if (viewName === 'find') {
+        authHeaderTitle.textContent = '아이디/비밀번호 찾기';
+        loginBackBtn.href = '#login';
+      } else if (viewName === 'signup') {
+        authHeaderTitle.textContent = '회원가입';
+        loginBackBtn.href = '#login';
+      }
+    }
+
+    document.getElementById('openFindViewBtn').addEventListener('click', () => {
+      document.getElementById('findStatusMsg').textContent = '';
+      switchAuthView('find');
+    });
+
+    document.getElementById('openSignupViewBtn').addEventListener('click', () => {
+      document.getElementById('signupStatusMsg').textContent = '';
+      switchAuthView('signup');
+    });
+
+    document.querySelectorAll('[data-back-login]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        switchAuthView('login');
+      });
+    });
+
+    loginBackBtn.addEventListener('click', (e) => {
+      if (currentAuthView !== 'login') {
+        e.preventDefault();
+        switchAuthView('login');
+      }
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const idVal = document.getElementById('userId').value.trim();
+      const msgEl = document.getElementById('loginStatusMsg');
+      msgEl.textContent = `${idVal}님, 환영합니다! 메인 페이지로 이동합니다.`;
+      setTimeout(() => {
+        window.location.href = '../../index.html';
+      }, 900);
+    });
+
+    document.getElementById('findForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nameVal = document.getElementById('findName').value.trim();
+      const emailVal = document.getElementById('findEmail').value.trim();
+      const msgEl = document.getElementById('findStatusMsg');
+      msgEl.textContent = `${nameVal}님의 회원 정보(${emailVal})로 아이디 및 비밀번호 재설정 안내를 확인했습니다.`;
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const idVal = document.getElementById('signupId').value.trim();
+      const pwVal = document.getElementById('signupPw').value;
+      const pwConfirmVal = document.getElementById('signupPwConfirm').value;
+      const msgEl = document.getElementById('signupStatusMsg');
+
+      if (pwVal !== pwConfirmVal) {
+        msgEl.textContent = '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
+        return;
+      }
+
+      msgEl.textContent = `${idVal}님, 회원가입이 완료되었습니다! 로그인 화면으로 이동합니다.`;
+      setTimeout(() => {
+        document.getElementById('userId').value = idVal;
+        switchAuthView('login');
+      }, 900);
+    });
+  </script>
+</body>
+</html>

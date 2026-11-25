@@ -1,12 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>결제 완료 페이지</title>
-    <link rel="stylesheet" href="css/payments_finish_style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입덕볶이 - 결제 완료</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <h1>결제 완료 페이지</h1>
+  <div class="app-container">
+    <!-- 뒤로가기 -> 메인 페이지 -->
+    <header class="header">
+      <a href="../../index.html" class="icon-btn" aria-label="메인으로 돌아가기">
+        <i data-lucide="chevron-left"></i>
+      </a>
+      <h1 class="header-title">결제 완료</h1>
+      <div style="width: 28px;"></div>
+    </header>
+
+    <main class="complete-main">
+      <div class="complete-icon-circle">
+        <i data-lucide="check"></i>
+      </div>
+      <h2 class="complete-title">주문이 완료되었습니다!</h2>
+      <p class="complete-sub">매콤달콤하게 조리하여 빠르게 준비해 드리겠습니다.</p>
+
+      <div class="complete-info-box">
+        <div class="summary-row">
+          <span>주문번호</span>
+          <strong id="orderNoText">ORD-123456</strong>
+        </div>
+        <div class="summary-row">
+          <span>주문유형</span>
+          <span id="orderTypeText">배달 주문</span>
+        </div>
+        <div class="summary-row">
+          <span>결제수단</span>
+          <span id="orderMethodText">신용/체크카드</span>
+        </div>
+        <div class="summary-row total">
+          <span>결제금액</span>
+          <strong id="orderTotalText">0원</strong>
+        </div>
+      </div>
+
+      <div class="bottom-fixed-bar">
+        <a href="../../index.html" class="primary-action-btn full" id="goHomeBtn">메인 페이지로 돌아가기</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const lastOrder = JSON.parse(localStorage.getItem('last_order_info') || 'null');
+    if (lastOrder) {
+      document.getElementById('orderNoText').textContent = lastOrder.orderNo;
+      document.getElementById('orderTypeText').textContent = lastOrder.type;
+      if (lastOrder.method) {
+        document.getElementById('orderMethodText').textContent = lastOrder.method;
+      }
+      document.getElementById('orderTotalText').textContent = `${lastOrder.total.toLocaleString()}원`;
+    }
+  </script>
 </body>
 </html>

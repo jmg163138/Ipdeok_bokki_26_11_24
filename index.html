@@ -1,234 +1,497 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메인 페이지</title>
-
-    <!-- Noto Sans KR -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
-
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입덕볶이 - 메인 페이지</title>
+  <!-- Noto Sans KR 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- 스타일시트 연결 -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Lucide 아이콘 -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-
 <body>
-
-<div class="container">
-
-    <!-- HEADER -->
+  <div class="app-container">
+    <!-- 헤더 -->
     <header class="header">
-        <div class="logo">
-            <a href="Img/로고.png">
-                <img src="assets/images/logo.png" alt="로고">
-            </a>
-        </div>
-
-        <button class="menu-button" id="menuOpen" aria-label="메뉴 열기" aria-expanded="false">
-            <i data-lucide="menu"></i>
+      <a href="index.html" class="logo">
+        <img src="img/로고.png" alt="LOGO">
+      </a>
+      <div class="header-actions">
+        <a href="sub/cart/cart.html" class="cart-btn" aria-label="장바구니">
+          <i data-lucide="shopping-cart"></i>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </a>
+        <button type="button" class="menu-btn" id="menuOpenBtn" aria-label="메뉴 열기" aria-expanded="false">
+          <i data-lucide="menu"></i>
         </button>
+      </div>
     </header>
 
-
-<!-- HERO SECTION -->
-<section class="hero-section">
-
-    <div class="hero-slider" id="heroSlider">
-
-        <div class="hero-slide">
-            <img src="Img/불닭 치즈.png" alt="첫 번째 광고">
+    <!-- 슬라이드 메뉴 (500px 프레임 기준 오른쪽 -> 왼쪽 슬라이드, 너비 2/3) -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <nav class="side-drawer" id="sideDrawer" aria-hidden="true">
+      <div class="side-drawer-inner">
+        <div class="drawer-header">
+          <button type="button" class="close-btn" id="menuCloseBtn" aria-label="메뉴 닫기">
+            <i data-lucide="x"></i>
+          </button>
         </div>
+        <ul class="drawer-menu">
+          <li><a href="Sub/lists/list.html">떡볶이 메뉴</a></li>
+          <li><a href="sub/about/about.html">소개</a></li>
+          <li><a href="sub/community/community.html">커뮤니티</a></li>
+          <li><a href="sub/login/login.html">로그인</a></li>
+        </ul>
+      </div>
+    </nav>
 
-        <div class="hero-slide">
-            <img src="Img/통 오징어.png" alt="두 번째 광고">
+    <main>
+      <!-- Hero 섹션 (광고 배너 3개, 1344 x 756 비율 기준 자동 슬라이드) -->
+      <section class="hero-section">
+        <div class="hero-slider" id="heroSlider">
+          <div class="hero-slide">
+            <img src="img/banner1.jpg" alt="신메뉴 프로모션 배너 1">
+          </div>
+          <div class="hero-slide">
+            <img src="img/banner2.jpg" alt="콜라보 광고 배너 2">
+          </div>
+          <div class="hero-slide">
+            <img src="img/banner3.jpg" alt="신메뉴 출시 배너 3">
+          </div>
         </div>
+        <div class="hero-pagination" id="heroPagination">1 / 3</div>
+      </section>
 
-    </div>
+      <!-- Section 1: 주문 버튼 영역 (높이 80px, 20px 미디움) -->
+      <section class="section1">
+        <a href="sub/lists/lists.html?type=delivery" class="order-btn full-btn">배달</a>
+        <div class="order-btn-row">
+          <a href="sub/lists/lists.html?type=pickup" class="order-btn sub-order-btn">포장</a>
+          <a href="sub/cart/cart.html" class="order-btn accent-order-btn">쿠폰</a>
+        </div>
+      </section>
 
-    <div class="hero-pagination">
-        <span id="currentSlide">01</span>
-        <span class="pagination-divider">/</span>
-        <span id="totalSlides">02</span>
-    </div>
-
-</section>
-
-
-    <!-- SECTION 1 -->
-    <section class="section1">
-
-        <button class="main-button">배달</button>
-        <button class="main-button">포장</button>
-        <button class="main-button">쿠폰</button>
-
-    </section>
-
-
-    <!-- SECTION 2 -->
-    <section class="section2">
-
+      <!-- Section 2: 추천 메뉴 -->
+      <section class="section2">
         <h2 class="section-title">추천메뉴</h2>
 
-        <!-- 해시태그 버튼 -->
-        <div class="hashtag-list">
-            <button class="hashtag-button active">#추천메뉴1</button>
-            <button class="hashtag-button">#추천메뉴2</button>
-            <button class="hashtag-button">#추천메뉴3</button>
+        <div class="hashtag-group" id="recommendHashtags">
+          <button type="button" class="tag-btn active" data-tag="tag1">#매콤달콤</button>
+          <button type="button" class="tag-btn" data-tag="tag2">#크리미로제</button>
+          <button type="button" class="tag-btn" data-tag="tag3">#바삭튀김조합</button>
         </div>
 
-        <!-- 추천 메뉴 콘텐츠 -->
-        <div class="recommend-list">
+        <div class="recommend-slider-wrap" id="recommendSliderWrap">
+          <button type="button" class="recommend-arrow prev-btn" id="recommendPrevBtn" aria-label="이전 추천메뉴">
+            <i data-lucide="chevron-left"></i>
+          </button>
 
-            <div class="recommend-item">
-                <div class="recommend-image"></div>
-            </div>
+          <div class="recommend-track" id="recommendTrack"></div>
 
-            <div class="recommend-item">
-                <div class="recommend-image"></div>
-            </div>
-
-            <div class="recommend-item">
-                <div class="recommend-image"></div>
-            </div>
-
+          <button type="button" class="recommend-arrow next-btn" id="recommendNextBtn" aria-label="다음 추천메뉴">
+            <i data-lucide="chevron-right"></i>
+          </button>
         </div>
+      </section>
 
-    </section>
-
-
-    <!-- SECTION 3 -->
-    <section class="section3">
-
+      <!-- Section 3: 메뉴 -->
+      <section class="section3">
         <h2 class="section-title">메뉴</h2>
 
-        <!-- 탭 메뉴 -->
-        <div class="hashtag-list">
-            <button class="hashtag-button active">탭메뉴 1</button>
-            <button class="hashtag-button">탭메뉴 2</button>
-            <button class="hashtag-button">탭메뉴 3</button>
+        <div class="hashtag-group" id="menuTabButtons">
+          <button type="button" class="tag-btn active" data-tab-index="0">떡볶이</button>
+          <button type="button" class="tag-btn" data-tab-index="1">사이드</button>
+          <button type="button" class="tag-btn" data-tab-index="2">세트 메뉴</button>
         </div>
 
-        <!-- 메뉴 콘텐츠 -->
-        <div class="menu-content">
-
-            <div class="menu-item">
-                <div class="menu-image"></div>
-                <p class="menu-title">콘텐츠 타이틀</p>
+        <div class="menu-slider-wrap">
+          <div class="menu-slider-track" id="menuSliderTrack">
+            <!-- 탭 1: 떡볶이 (4개) -->
+            <div class="menu-grid">
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m1" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu1.jpg" alt="오리지널 입덕볶이">
+                  </div>
+                  <p class="menu-item-title">오리지널 입덕볶이</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m1" data-name="오리지널 입덕볶이" data-price="14000" data-img="img/menu1.jpg">장바구니 담기</button>
+              </div>
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m2" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu2.jpg" alt="로제 입덕볶이">
+                  </div>
+                  <p class="menu-item-title">로제 입덕볶이</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m2" data-name="로제 입덕볶이" data-price="16000" data-img="img/menu2.jpg">장바구니 담기</button>
+              </div>
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m3" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu3.jpg" alt="마라 입덕볶이">
+                  </div>
+                  <p class="menu-item-title">마라 입덕볶이</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m3" data-name="마라 입덕볶이" data-price="17000" data-img="img/menu3.jpg">장바구니 담기</button>
+              </div>
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m4" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu4.jpg" alt="치즈폭탄 입덕볶이">
+                  </div>
+                  <p class="menu-item-title">치즈폭탄 입덕볶이</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m4" data-name="치즈폭탄 입덕볶이" data-price="16500" data-img="img/menu4.jpg">장바구니 담기</button>
+              </div>
             </div>
 
+            <!-- 탭 2: 사이드 (4개) -->
+            <div class="menu-grid">
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m5" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu2-1.jpg" alt="모듬 튀김 세트">
+                  </div>
+                  <p class="menu-item-title">모듬 튀김 세트</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m5" data-name="모듬 튀김 세트" data-price="6500" data-img="img/menu2-1.jpg">장바구니 담기</button>
+              </div>
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m6" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu2-2.jpg" alt="순대 & 내장">
+                  </div>
+                  <p class="menu-item-title">순대 & 내장</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m6" data-name="순대 & 내장" data-price="5000" data-img="img/menu2-2.jpg">장바구니 담기</button>
+              </div>
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m7" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu2-3.jpg" alt="스팸 참치 주먹밥">
+                  </div>
+                  <p class="menu-item-title">스팸 참치 주먹밥</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m7" data-name="스팸 참치 주먹밥" data-price="4500" data-img="img/menu2-3.jpg">장바구니 담기</button>
+              </div>
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m8" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu2-4.jpg" alt="바삭 야끼만두">
+                  </div>
+                  <p class="menu-item-title">바삭 야끼만두</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m8" data-name="바삭 야끼만두" data-price="4000" data-img="img/menu2-4.jpg">장바구니 담기</button>
+              </div>
+            </div>
+
+            <!-- 탭 3: 세트 메뉴 (4개) -->
+            <div class="menu-grid">
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m9" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu3-1.jpg" alt="입덕 2인 커플 세트">
+                  </div>
+                  <p class="menu-item-title">입덕 2인 커플 세트</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m9" data-name="입덕 2인 커플 세트" data-price="23000" data-img="img/menu3-1.jpg">장바구니 담기</button>
+              </div>
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m10" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu3-2.jpg" alt="로제 & 튀김 세트">
+                  </div>
+                  <p class="menu-item-title">로제 & 튀김 세트</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m10" data-name="로제 & 튀김 세트" data-price="24500" data-img="img/menu3-2.jpg">장바구니 담기</button>
+              </div>
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m11" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu3-3.jpg" alt="마라 & 주먹밥 세트">
+                  </div>
+                  <p class="menu-item-title">마라 & 주먹밥 세트</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m11" data-name="마라 & 주먹밥 세트" data-price="22500" data-img="img/menu3-3.jpg">장바구니 담기</button>
+              </div>
+              <div class="menu-item">
+                <a href="sub/detail/detail.html?id=m12" class="menu-link">
+                  <div class="menu-thumb">
+                    <img src="img/menu3-4.jpg" alt="입덕 패밀리 파티 세트">
+                  </div>
+                  <p class="menu-item-title">입덕 패밀리 파티 세트</p>
+                </a>
+                <button type="button" class="quick-cart-btn" data-id="m12" data-name="입덕 패밀리 파티 세트" data-price="32000" data-img="img/menu3-4.jpg">장바구니 담기</button>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+    </main>
 
-    </section>
+    <div class="toast-msg" id="toastMsg">장바구니에 담겼습니다.</div>
+  </div>
 
-</div>
-
-
-<!-- MENU OVERLAY -->
-<div class="menu-overlay" id="menuOverlay"></div>
-
-
-<!-- SIDE MENU -->
-<nav class="side-menu" id="sideMenu" aria-label="전체 메뉴" aria-hidden="true">
-
-    <ul class="side-menu-list">
-        <li><a href="#">리스트 페이지</a></li>
-        <li><a href="#">상세 페이지</a></li>
-        <li><a href="#">결제 페이지</a></li>
-        <li><a href="#">결제</a></li>
-    </ul>
-
-</nav>
-
-
-<!-- JAVASCRIPT -->
-<script>
-
-    // Lucide 아이콘
+  <script>
     lucide.createIcons();
 
+    function getCart() {
+      return JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
+    }
 
-    // 햄버거 메뉴
-    const menuOpen = document.getElementById('menuOpen');
-    const sideMenu = document.getElementById('sideMenu');
-    const menuOverlay = document.getElementById('menuOverlay');
+    function saveCart(cart) {
+      localStorage.setItem('tteokbokki_cart', JSON.stringify(cart));
+      updateCartBadge();
+    }
 
+    function updateCartBadge() {
+      const totalCount = getCart().reduce((sum, item) => sum + item.qty, 0);
+      const badge = document.getElementById('cartBadge');
+      if (badge) {
+        badge.textContent = totalCount;
+        badge.style.display = totalCount > 0 ? 'flex' : 'none';
+      }
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    function addToCart(item) {
+      const cart = getCart();
+      const existing = cart.find((c) => c.id === item.id);
+      if (existing) {
+        existing.qty += item.qty || 1;
+      } else {
+        cart.push({
+          id: item.id,
+          name: item.name,
+          price: Number(item.price),
+          img: item.img,
+          qty: item.qty || 1
+        });
+      }
+      saveCart(cart);
+      showToast('장바구니에 메뉴가 담겼습니다.');
+    }
+
+    document.querySelectorAll('.quick-cart-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        addToCart({
+          id: btn.dataset.id,
+          name: btn.dataset.name,
+          price: btn.dataset.price,
+          img: btn.dataset.img,
+          qty: 1
+        });
+      });
+    });
+
+    updateCartBadge();
+
+    // 1. 햄버거 메뉴 슬라이드 제어
+    const menuOpenBtn = document.getElementById('menuOpenBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const sideDrawer = document.getElementById('sideDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
 
     function openMenu() {
-        sideMenu.classList.add('active');
-        menuOverlay.classList.add('active');
-
-        document.body.classList.add('menu-open');
-
-        menuOpen.setAttribute('aria-expanded', 'true');
-        sideMenu.setAttribute('aria-hidden', 'false');
+      sideDrawer.classList.add('open');
+      drawerOverlay.classList.add('open');
+      menuOpenBtn.setAttribute('aria-expanded', 'true');
+      sideDrawer.setAttribute('aria-hidden', 'false');
     }
-
 
     function closeMenu() {
-        sideMenu.classList.remove('active');
-        menuOverlay.classList.remove('active');
-
-        document.body.classList.remove('menu-open');
-
-        menuOpen.setAttribute('aria-expanded', 'false');
-        sideMenu.setAttribute('aria-hidden', 'true');
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+      menuOpenBtn.setAttribute('aria-expanded', 'false');
+      sideDrawer.setAttribute('aria-hidden', 'true');
     }
 
+    menuOpenBtn.addEventListener('click', openMenu);
+    menuCloseBtn.addEventListener('click', closeMenu);
+    drawerOverlay.addEventListener('click', closeMenu);
 
-    menuOpen.addEventListener('click', function () {
-        if (sideMenu.classList.contains('active')) {
-            closeMenu();
-        } else {
-            openMenu();
-        }
-    });
-
-
-    menuOverlay.addEventListener('click', closeMenu);
-
-
-    document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') {
-            closeMenu();
-        }
-    });
-
-
-
-    // HERO 광고 슬라이드
+    // 2. Hero 배너 자동 슬라이드
     const heroSlider = document.getElementById('heroSlider');
-    const currentSlide = document.getElementById('currentSlide');
+    const heroPagination = document.getElementById('heroPagination');
+    const slides = document.querySelectorAll('.hero-slide');
+    const totalSlides = slides.length;
+    let currentSlide = 0;
 
-    const totalSlideCount = 2;
-    let slideIndex = 0;
-
-
-    function changeSlide() {
-
-        slideIndex++;
-
-        if (slideIndex >= totalSlideCount) {
-            slideIndex = 0;
-        }
-
-        heroSlider.style.transform = `translateX(-${slideIndex * 100}%)`;
-
-        currentSlide.textContent = String(slideIndex + 1).padStart(2, '0');
-
+    function updateHeroSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      heroSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+      heroPagination.textContent = `${currentSlide + 1} / ${totalSlides}`;
     }
 
+    setInterval(updateHeroSlide, 3500);
 
-    // 4초마다 광고 자동 전환
-    setInterval(changeSlide, 4000);
+    // 3. 추천메뉴 해시태그 전환 및 좌우 슬라이드
+    const recommendData = {
+      tag1: [
+        { id: 'm1', badge: 'BEST 1', title: '오리지널 입덕볶이', img: 'img/recommend1.jpg', link: 'sub/detail/detail.html?id=m1' },
+        { id: 'm3', badge: 'BEST 2', title: '마라 입덕볶이', img: 'img/recommend2.jpg', link: 'sub/detail/detail.html?id=m3' },
+        { id: 'm4', badge: 'BEST 3', title: '치즈폭탄 입덕볶이', img: 'img/recommend3.jpg', link: 'sub/detail/detail.html?id=m4' }
+      ],
+      tag2: [
+        { id: 'm2', badge: 'PICK 1', title: '로제 입덕볶이', img: 'img/recommend2.jpg', link: 'sub/detail/detail.html?id=m2' },
+        { id: 'm10', badge: 'PICK 2', title: '로제 & 튀김 세트', img: 'img/recommend3.jpg', link: 'sub/detail/detail.html?id=m10' },
+        { id: 'm9', badge: 'PICK 3', title: '입덕 2인 커플 세트', img: 'img/recommend1.jpg', link: 'sub/detail/detail.html?id=m9' }
+      ],
+      tag3: [
+        { id: 'm5', badge: 'HOT 1', title: '모듬 튀김 세트', img: 'img/recommend3.jpg', link: 'sub/detail/detail.html?id=m5' },
+        { id: 'm7', badge: 'HOT 2', title: '스팸 참치 주먹밥', img: 'img/recommend1.jpg', link: 'sub/detail/detail.html?id=m7' },
+        { id: 'm12', badge: 'HOT 3', title: '입덕 패밀리 파티 세트', img: 'img/recommend2.jpg', link: 'sub/detail/detail.html?id=m12' }
+      ]
+    };
 
+    const recommendTagButtons = document.querySelectorAll('#recommendHashtags .tag-btn');
+    const recommendSliderWrap = document.getElementById('recommendSliderWrap');
+    const recommendTrack = document.getElementById('recommendTrack');
+    const recommendPrevBtn = document.getElementById('recommendPrevBtn');
+    const recommendNextBtn = document.getElementById('recommendNextBtn');
 
-</script>
+    const CARD_WIDTH = 280;
+    const CARD_GAP = 16;
+    const STEP_WIDTH = CARD_WIDTH + CARD_GAP;
 
+    let currentRecommendTag = 'tag1';
+    let currentRecommendIndex = 0;
+    let trackPositionIndex = 2;
+    let isSliding = false;
+
+    function createCardHTML(data, isCenter) {
+      return `
+        <div class="recommend-card ${isCenter ? 'center-card' : 'side-card'}">
+          <div class="card-info">
+            <span class="badge">${data.badge}</span>
+            <p class="card-title">${data.title}</p>
+            <a href="${data.link}" class="card-order-btn">주문하기</a>
+          </div>
+          <div class="card-img-box">
+            <img src="${data.img}" alt="${data.title}">
+          </div>
+        </div>
+      `;
+    }
+
+    function getTranslateX(posIndex) {
+      const wrapWidth = recommendSliderWrap.offsetWidth;
+      const centerOffset = (wrapWidth - CARD_WIDTH) / 2;
+      return centerOffset - posIndex * STEP_WIDTH;
+    }
+
+    function updateCenterCardClass() {
+      const cards = recommendTrack.querySelectorAll('.recommend-card');
+      cards.forEach((card, idx) => {
+        if (idx === trackPositionIndex) {
+          card.classList.add('center-card');
+          card.classList.remove('side-card');
+        } else {
+          card.classList.add('side-card');
+          card.classList.remove('center-card');
+        }
+      });
+    }
+
+    function buildRecommendTrack() {
+      const items = recommendData[currentRecommendTag];
+      const len = items.length;
+      const extendedList = [
+        items[(len - 2 + len) % len],
+        items[(len - 1 + len) % len],
+        ...items,
+        items[0 % len],
+        items[1 % len]
+      ];
+
+      recommendTrack.innerHTML = extendedList
+        .map((item, idx) => createCardHTML(item, idx === 2))
+        .join('');
+
+      currentRecommendIndex = 0;
+      trackPositionIndex = 2;
+
+      recommendTrack.style.transition = 'none';
+      recommendTrack.style.transform = `translateX(${getTranslateX(trackPositionIndex)}px)`;
+    }
+
+    function moveRecommendSlide(direction) {
+      if (isSliding) return;
+      isSliding = true;
+
+      const items = recommendData[currentRecommendTag];
+      const len = items.length;
+
+      trackPositionIndex += direction;
+      currentRecommendIndex = (currentRecommendIndex + direction + len) % len;
+
+      recommendTrack.style.transition = 'transform 0.4s ease';
+      recommendTrack.style.transform = `translateX(${getTranslateX(trackPositionIndex)}px)`;
+      updateCenterCardClass();
+    }
+
+    recommendTrack.addEventListener('transitionend', () => {
+      const items = recommendData[currentRecommendTag];
+      const len = items.length;
+
+      if (trackPositionIndex < 2) {
+        trackPositionIndex += len;
+        recommendTrack.style.transition = 'none';
+        recommendTrack.style.transform = `translateX(${getTranslateX(trackPositionIndex)}px)`;
+        updateCenterCardClass();
+      } else if (trackPositionIndex >= 2 + len) {
+        trackPositionIndex -= len;
+        recommendTrack.style.transition = 'none';
+        recommendTrack.style.transform = `translateX(${getTranslateX(trackPositionIndex)}px)`;
+        updateCenterCardClass();
+      }
+
+      isSliding = false;
+    });
+
+    recommendTagButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (isSliding) return;
+        recommendTagButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentRecommendTag = btn.dataset.tag;
+        buildRecommendTrack();
+      });
+    });
+
+    recommendPrevBtn.addEventListener('click', () => moveRecommendSlide(-1));
+    recommendNextBtn.addEventListener('click', () => moveRecommendSlide(1));
+
+    window.addEventListener('resize', () => {
+      recommendTrack.style.transition = 'none';
+      recommendTrack.style.transform = `translateX(${getTranslateX(trackPositionIndex)}px)`;
+    });
+
+    buildRecommendTrack();
+
+    // 4. 메뉴 섹션 탭메뉴 클릭 시 가로 슬라이드 전환
+    const menuTabButtons = document.querySelectorAll('#menuTabButtons .tag-btn');
+    const menuSliderTrack = document.getElementById('menuSliderTrack');
+
+    menuTabButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tabIndex = Number(btn.dataset.tabIndex);
+        menuTabButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        menuSliderTrack.style.transform = `translateX(-${tabIndex * 100}%)`;
+      });
+    });
+  </script>
 </body>
 </html>

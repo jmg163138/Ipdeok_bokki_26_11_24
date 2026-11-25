@@ -1,12 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>결제 페이지</title>
-    <link rel="stylesheet" href="css/payment_style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입덕볶이 - 결제 페이지</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <h1>결제 페이지</h1>
+  <div class="app-container">
+    <!-- 뒤로가기 -> 메인 페이지 -->
+    <header class="header">
+      <a href="../../index.html" class="icon-btn" aria-label="메인으로 돌아가기">
+        <i data-lucide="chevron-left"></i>
+      </a>
+      <h1 class="header-title">주문 / 결제</h1>
+      <div style="width: 28px;"></div>
+    </header>
+
+    <main class="sub-main checkout-main">
+      <!-- 주문 방식 선택 -->
+      <section class="checkout-section">
+        <h2 class="checkout-heading">주문 방식</h2>
+        <div class="order-btn-row" id="orderTypeGroup">
+          <button type="button" class="select-box-btn active" data-type="delivery">배달 주문</button>
+          <button type="button" class="select-box-btn" data-type="pickup">포장 주문</button>
+        </div>
+      </section>
+
+      <!-- 배달 주소 입력 -->
+      <section class="checkout-section" id="addressSection">
+        <h2 class="checkout-heading">배달 주소</h2>
+        <input type="text" class="form-input" id="addressInput" placeholder="주소를 입력해 주세요" value="서울시 강남구 테헤란로 123">
+        <input type="text" class="form-input" id="requestInput" placeholder="요청사항 (예: 문 앞에 놓아주세요)">
+      </section>
+
+      <!-- 주문 상품 요약 -->
+      <section class="checkout-section">
+        <h2 class="checkout-heading">주문 내역</h2>
+        <div id="checkoutItems"></div>
+      </section>
+
+      <!-- 결제 수단 -->
+      <section class="checkout-section">
+        <h2 class="checkout-heading">결제 수단</h2>
+        <div class="pay-method-grid" id="payMethodGroup">
+          <button type="button" class="select-box-btn active" data-method="신용/체크카드">신용/체크카드</button>
+          <button type="button" class="select-box-btn" data-method="카카오페이">카카오페이</button>
+          <button type="button" class="select-box-btn" data-method="네이버페이">네이버페이</button>
+          <button type="button" class="select-box-btn" data-method="만나서 결제">만나서 결제</button>
+        </div>
+      </section>
+
+      <!-- 최종 결제 금액 -->
+      <div class="price-summary-box">
+        <div class="summary-row">
+          <span>상품 금액</span>
+          <span id="checkoutSubTotal">0원</span>
+        </div>
+        <div class="summary-row">
+          <span>배달비</span>
+          <span id="checkoutDelivery">3,000원</span>
+        </div>
+        <div class="summary-row total">
+          <span>총 결제 금액</span>
+          <strong id="checkoutFinalTotal">0원</strong>
+        </div>
+      </div>
+
+      <div class="bottom-fixed-bar">
+        <button type="button" class="primary-action-btn full" id="completePayBtn">결제하기</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const cart = JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
+    let orderType = 'delivery';
+    let payMethod = '신용/체크카드';
+
+    function renderCheckout() {
+      const checkoutItems = document.getElementById('checkoutItems');
+      if (cart.length === 0) {
+        checkoutItems.innerHTML = '<p class="empty-text">장바구니에 담은 메뉴가 없습니다. 메뉴에서 담아주세요.</p>';
+      } else {
+        checkoutItems.innerHTML = cart.map((item) => `
+          <div class="checkout-item-row">
+            <span>${item.name} × ${item.qty}</span>
+            <strong>${(item.price * item.qty).toLocaleString()}원</strong>
+          </div>
+        `).join('');
+      }
+
+      const subTotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const delivery = orderType === 'delivery' && subTotal > 0 ? 3000 : 0;
+
+      document.getElementById('checkoutSubTotal').textContent = `${subTotal.toLocaleString()}원`;
+      document.getElementById('checkoutDelivery').textContent = `${delivery.toLocaleString()}원`;
+      document.getElementById('checkoutFinalTotal').textContent = `${(subTotal + delivery).toLocaleString()}원`;
+    }
+
+    document.querySelectorAll('#orderTypeGroup .select-box-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#orderTypeGroup .select-box-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        orderType = btn.dataset.type;
+        document.getElementById('addressSection').style.display = orderType === 'delivery' ? 'block' : 'none';
+        renderCheckout();
+      });
+    });
+
+    document.querySelectorAll('#payMethodGroup .select-box-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#payMethodGroup .select-box-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        payMethod = btn.dataset.method;
+      });
+    });
+
+    document.getElementById('completePayBtn').addEventListener('click', () => {
+      const subTotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const delivery = orderType === 'delivery' && subTotal > 0 ? 3000 : 0;
+      const addressVal = document.getElementById('addressInput').value.trim();
+
+      if (orderType === 'delivery' && !addressVal) {
+        alert('배달 주소를 입력해 주세요.');
+        return;
+      }
+
+      const lastOrder = {
+        orderNo: 'ORD-' + Math.floor(100000 + Math.random() * 900000),
+        total: subTotal + delivery,
+        type: orderType === 'delivery' ? '배달 주문' : '포장 주문',
+        method: payMethod,
+        items: cart
+      };
+      localStorage.setItem('last_order_info', JSON.stringify(lastOrder));
+      localStorage.removeItem('tteokbokki_cart');
+      window.location.href = '../payment_finish/payments_finish.html';
+    });
+
+    renderCheckout();
+  </script>
 </body>
 </html>

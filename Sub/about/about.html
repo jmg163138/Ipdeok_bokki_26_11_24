@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입덕볶이 - 소개</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- 뒤로가기 -> 메인 페이지 -->
+    <header class="header">
+      <a href="../../index.html" class="icon-btn" aria-label="메인으로 돌아가기">
+        <i data-lucide="chevron-left"></i>
+      </a>
+      <h1 class="header-title">소개</h1>
+      <div class="header-actions">
+        <a href="../cart/cart.html" class="cart-btn" aria-label="장바구니">
+          <i data-lucide="shopping-cart"></i>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </a>
+        <button type="button" class="menu-btn" id="menuOpenBtn" aria-label="메뉴 열기">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- 슬라이드 메뉴 -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <nav class="side-drawer" id="sideDrawer" aria-hidden="true">
+      <div class="side-drawer-inner">
+        <div class="drawer-header">
+          <button type="button" class="close-btn" id="menuCloseBtn" aria-label="메뉴 닫기">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <ul class="drawer-menu">
+          <li><a href="../lists/lists.html">떡볶이 메뉴</a></li>
+          <li><a href="about.html">소개</a></li>
+          <li><a href="../community/community.html">커뮤니티</a></li>
+          <li><a href="../login/login.html">로그인</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="sub-main">
+      <div class="info-card">
+        <span class="info-badge">BRAND STORY</span>
+        <h2 class="info-title">한 입 먹으면 빠져드는<br>정통 & 트렌디 떡볶이</h2>
+        <p class="info-desc">
+          매일 아침 뽑은 쫄깃한 떡과 직접 끓여 숙성한 특제 소스로 깊고 깔끔한 매콤달콤함을 전합니다.
+          오리지널부터 로제, 마라까지 취향에 맞게 골라 즐겨보세요.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h3 class="info-subtitle">매장 안내</h3>
+        <div class="summary-row">
+          <span>운영시간</span>
+          <strong>매일 11:00 ~ 23:00</strong>
+        </div>
+        <div class="summary-row">
+          <span>배달 · 포장</span>
+          <strong>연중무휴 운영</strong>
+        </div>
+        <div class="summary-row">
+          <span>문의전화</span>
+          <strong>02-1234-5678</strong>
+        </div>
+      </div>
+
+      <a href="../lists/lists.html" class="primary-action-btn full">메뉴 보러가기</a>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const cart = JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
+    const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+    const badge = document.getElementById('cartBadge');
+    if (badge) {
+      badge.textContent = totalCount;
+      badge.style.display = totalCount > 0 ? 'flex' : 'none';
+    }
+
+    const menuOpenBtn = document.getElementById('menuOpenBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const sideDrawer = document.getElementById('sideDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+
+    menuOpenBtn.addEventListener('click', () => {
+      sideDrawer.classList.add('open');
+      drawerOverlay.classList.add('open');
+    });
+    menuCloseBtn.addEventListener('click', () => {
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    });
+    drawerOverlay.addEventListener('click', () => {
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    });
+  </script>
+</body>
+</html>

@@ -1,12 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상세페이지</title>
-    <link rel="stylesheet" href="css/detail_style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입덕볶이 - 메뉴 상세</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <h1>상세페이지</h1>
+  <div class="app-container">
+    <!-- 뒤로가기 -> 메인 페이지 -->
+    <header class="header">
+      <a href="../../index.html" class="icon-btn" aria-label="메인으로 돌아가기">
+        <i data-lucide="chevron-left"></i>
+      </a>
+      <h1 class="header-title">메뉴 상세</h1>
+      <div class="header-actions">
+        <a href="../cart/cart.html" class="cart-btn" aria-label="장바구니">
+          <i data-lucide="shopping-cart"></i>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </a>
+        <button type="button" class="menu-btn" id="menuOpenBtn" aria-label="메뉴 열기">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- 슬라이드 메뉴 -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <nav class="side-drawer" id="sideDrawer" aria-hidden="true">
+      <div class="side-drawer-inner">
+        <div class="drawer-header">
+          <button type="button" class="close-btn" id="menuCloseBtn" aria-label="메뉴 닫기">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <ul class="drawer-menu">
+          <li><a href="../lists/lists.html">떡볶이 메뉴</a></li>
+          <li><a href="../about/about.html">소개</a></li>
+          <li><a href="../community/community.html">커뮤니티</a></li>
+          <li><a href="../login/login.html">로그인</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="detail-main">
+      <div class="detail-img-box">
+        <img id="detailImg" src="../../img/menu1.jpg" alt="메뉴 이미지">
+      </div>
+
+      <div class="detail-content">
+        <h2 class="detail-title" id="detailTitle">오리지널 입덕볶이</h2>
+        <p class="detail-desc" id="detailDesc">매콤달콤한 특제 비법 소스와 쫄깃한 밀떡이 어우러진 대표 메뉴입니다.</p>
+        <p class="detail-price" id="detailPrice">14,000원</p>
+
+        <div class="detail-option-box">
+          <span class="option-label">맵기 선택</span>
+          <div class="hashtag-group" id="spicyGroup">
+            <button type="button" class="tag-btn active" data-spicy="순한맛">순한맛</button>
+            <button type="button" class="tag-btn" data-spicy="보통맛">보통맛</button>
+            <button type="button" class="tag-btn" data-spicy="매운맛">매운맛</button>
+          </div>
+        </div>
+
+        <div class="detail-qty-box">
+          <span class="option-label">수량</span>
+          <div class="qty-control">
+            <button type="button" id="qtyMinus">-</button>
+            <span id="qtyValue">1</span>
+            <button type="button" id="qtyPlus">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-fixed-bar">
+        <button type="button" class="sub-action-btn" id="addCartBtn">장바구니 담기</button>
+        <button type="button" class="primary-action-btn" id="directOrderBtn">결제하기</button>
+      </div>
+    </main>
+
+    <div class="toast-msg" id="toastMsg">장바구니에 담겼습니다.</div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const menuCatalog = {
+      m1: { id: 'm1', name: '오리지널 입덕볶이', desc: '매콤달콤 기본 대표 떡볶이', price: 14000, img: '../../img/menu1.jpg' },
+      m2: { id: 'm2', name: '로제 입덕볶이', desc: '부드러운 크림과 매콤 소스의 조화', price: 16000, img: '../../img/menu2.jpg' },
+      m3: { id: 'm3', name: '마라 입덕볶이', desc: '얼얼한 중독성 있는 마라 풍미', price: 17000, img: '../../img/menu3.jpg' },
+      m4: { id: 'm4', name: '치즈폭탄 입덕볶이', desc: '고소한 치즈가 듬뿍 올라간 떡볶이', price: 16500, img: '../../img/menu4.jpg' },
+      m5: { id: 'm5', name: '모듬 튀김 세트', desc: '김말이, 오징어, 야채, 만두 튀김', price: 6500, img: '../../img/menu2-1.jpg' },
+      m6: { id: 'm6', name: '순대 & 내장', desc: '쫀득한 찰순대와 모듬 내장', price: 5000, img: '../../img/menu2-2.jpg' },
+      m7: { id: 'm7', name: '스팸 참치 주먹밥', desc: '고소한 스팸과 참치로 만든 주먹밥', price: 4500, img: '../../img/menu2-3.jpg' },
+      m8: { id: 'm8', name: '바삭 야끼만두', desc: '소스에 찍어 먹기 좋은 바삭한 야끼만두', price: 4000, img: '../../img/menu2-4.jpg' },
+      m9: { id: 'm9', name: '입덕 2인 커플 세트', desc: '떡볶이 + 모듬튀김 + 주먹밥 + 쿨피스', price: 23000, img: '../../img/menu3-1.jpg' },
+      m10: { id: 'm10', name: '로제 & 튀김 세트', desc: '로제 떡볶이 + 모듬튀김 + 음료 구성', price: 24500, img: '../../img/menu3-2.jpg' },
+      m11: { id: 'm11', name: '마라 & 주먹밥 세트', desc: '마라 떡볶이 + 스팸 참치 주먹밥 조합', price: 22500, img: '../../img/menu3-3.jpg' },
+      m12: { id: 'm12', name: '입덕 패밀리 파티 세트', desc: '여럿이 함께 즐기는 푸짐한 패밀리 세트', price: 32000, img: '../../img/menu3-4.jpg' }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const menuId = params.get('id') || 'm1';
+    const currentItem = menuCatalog[menuId] || menuCatalog.m1;
+
+    let qty = 1;
+    let selectedSpicy = '순한맛';
+
+    document.getElementById('detailImg').src = currentItem.img;
+    document.getElementById('detailTitle').textContent = currentItem.name;
+    document.getElementById('detailDesc').textContent = currentItem.desc;
+    document.getElementById('detailPrice').textContent = `${currentItem.price.toLocaleString()}원`;
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem('tteokbokki_cart', JSON.stringify(cart));
+      updateCartBadge();
+    }
+
+    function updateCartBadge() {
+      const totalCount = getCart().reduce((sum, item) => sum + item.qty, 0);
+      const badge = document.getElementById('cartBadge');
+      badge.textContent = totalCount;
+      badge.style.display = totalCount > 0 ? 'flex' : 'none';
+    }
+
+    function pushItemToCart() {
+      const cart = getCart();
+      const cartKey = `${currentItem.id}_${selectedSpicy}`;
+      const existing = cart.find((c) => c.id === cartKey);
+
+      if (existing) {
+        existing.qty += qty;
+      } else {
+        cart.push({
+          id: cartKey,
+          name: `${currentItem.name} (${selectedSpicy})`,
+          price: currentItem.price,
+          img: currentItem.img,
+          qty: qty
+        });
+      }
+      saveCart(cart);
+    }
+
+    document.querySelectorAll('#spicyGroup .tag-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#spicyGroup .tag-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedSpicy = btn.dataset.spicy;
+      });
+    });
+
+    document.getElementById('qtyMinus').addEventListener('click', () => {
+      if (qty > 1) {
+        qty -= 1;
+        document.getElementById('qtyValue').textContent = qty;
+      }
+    });
+
+    document.getElementById('qtyPlus').addEventListener('click', () => {
+      qty += 1;
+      document.getElementById('qtyValue').textContent = qty;
+    });
+
+    document.getElementById('addCartBtn').addEventListener('click', () => {
+      pushItemToCart();
+      const toast = document.getElementById('toastMsg');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    });
+
+    document.getElementById('directOrderBtn').addEventListener('click', () => {
+      pushItemToCart();
+      window.location.href = '../payment/payment.html';
+    });
+
+    const menuOpenBtn = document.getElementById('menuOpenBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const sideDrawer = document.getElementById('sideDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+
+    menuOpenBtn.addEventListener('click', () => {
+      sideDrawer.classList.add('open');
+      drawerOverlay.classList.add('open');
+    });
+    menuCloseBtn.addEventListener('click', () => {
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    });
+    drawerOverlay.addEventListener('click', () => {
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    });
+
+    updateCartBadge();
+  </script>
 </body>
 </html>
