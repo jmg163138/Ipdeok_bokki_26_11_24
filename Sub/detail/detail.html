@@ -12,15 +12,15 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- 뒤로가기 -> 메인 페이지 -->
+    <!-- 뒤로가기 -> 이전 페이지(없으면 메인) -->
     <header class="header">
-      <a href="../../index.html" class="icon-btn" aria-label="메인으로 돌아가기">
+      <button type="button" class="icon-btn" id="backBtn" aria-label="뒤로가기">
         <i data-lucide="chevron-left"></i>
-      </a>
+      </button>
       <h1 class="header-title">메뉴 상세</h1>
       <div class="header-actions">
         <a href="../cart/cart.html" class="cart-btn" aria-label="장바구니">
-          <i data-lucide="shopping-cart"></i>
+          <i data-lucide="shopping-bag"></i>
           <span class="cart-badge" id="cartBadge">0</span>
         </a>
         <button type="button" class="menu-btn" id="menuOpenBtn" aria-label="메뉴 열기">
@@ -51,173 +51,127 @@
 
     <main class="detail-main">
       <div class="detail-img-box">
-        <img id="detailImg" src="../../img/menu1.jpg" alt="메뉴 이미지">
+        <img id="detailImg" src="" alt="메뉴 이미지">
       </div>
-
       <div class="detail-content">
-        <h2 class="detail-title" id="detailTitle">오리지널 입덕볶이</h2>
-        <p class="detail-desc" id="detailDesc">매콤달콤한 특제 비법 소스와 쫄깃한 밀떡이 어우러진 대표 메뉴입니다.</p>
-        <p class="detail-price" id="detailPrice">14,000원</p>
+        <h2 class="detail-title" id="detailTitle">메뉴명</h2>
+        <p class="detail-desc" id="detailDesc">메뉴 설명</p>
+        <div class="detail-price" id="detailPrice">0원</div>
 
-        <!-- 맵기 선택 -->
+        <!-- 맵기 옵션 선택 -->
         <div class="detail-option-box">
-          <span class="option-label">맵기 선택</span>
-          <div class="hashtag-group" id="spicyGroup">
-            <button type="button" class="tag-btn active" data-spicy="순한맛">순한맛</button>
-            <button type="button" class="tag-btn" data-spicy="보통맛">보통맛</button>
-            <button type="button" class="tag-btn" data-spicy="매운맛">매운맛</button>
+          <div class="option-header-row">
+            <span class="option-label">맵기 선택</span>
+            <span class="option-sub-text">단계별 맵기 설명을 확인하세요</span>
+          </div>
+          <div class="hashtag-group" id="spiceGroup">
+            <button type="button" class="tag-btn active" data-spice="순한맛">순한맛</button>
+            <button type="button" class="tag-btn" data-spice="보통맛">보통맛</button>
+            <button type="button" class="tag-btn" data-spice="매운맛">매운맛</button>
+          </div>
+          <div class="spice-guide-box" id="spiceGuideBox">
+            <strong class="spice-guide-title" id="spiceGuideTitle">순한맛</strong>
+            <p class="spice-guide-desc" id="spiceGuideDesc"></p>
           </div>
         </div>
 
-        <!-- 토핑 추가 (중복 선택 가능) -->
+        <!-- 추가 토핑/사이드 옵션 -->
         <div class="detail-option-box">
           <div class="option-header-row">
-            <span class="option-label">토핑 추가</span>
+            <span class="option-label">추가 옵션</span>
             <span class="option-sub-text">중복 선택 가능</span>
           </div>
-          <div class="extra-option-list" id="toppingGroup">
+          <div class="extra-option-list" id="extraOptionList">
             <label class="extra-option-item">
               <span class="extra-option-left">
-                <input type="checkbox" value="눈꽃 치즈" data-price="3000">
-                <span>눈꽃 치즈</span>
+                <input type="checkbox" value="모짜렐라 치즈" data-price="2500">
+                <span>모짜렐라 치즈</span>
               </span>
-              <span class="extra-option-price">+3,000원</span>
+              <span class="extra-option-price">+2,500원</span>
             </label>
             <label class="extra-option-item">
               <span class="extra-option-left">
-                <input type="checkbox" value="중국당면" data-price="3000">
-                <span>중국당면</span>
+                <input type="checkbox" value="계란 2개" data-price="1500">
+                <span>계란 2개</span>
               </span>
-              <span class="extra-option-price">+3,000원</span>
+              <span class="extra-option-price">+1,500원</span>
             </label>
             <label class="extra-option-item">
               <span class="extra-option-left">
-                <input type="checkbox" value="분모자" data-price="3500">
-                <span>분모자</span>
+                <input type="checkbox" value="모듬튀김 추가" data-price="3500">
+                <span>모듬튀김 추가</span>
               </span>
               <span class="extra-option-price">+3,500원</span>
             </label>
             <label class="extra-option-item">
               <span class="extra-option-left">
-                <input type="checkbox" value="비엔나 소시지" data-price="2500">
-                <span>비엔나 소시지</span>
-              </span>
-              <span class="extra-option-price">+2,500원</span>
-            </label>
-            <label class="extra-option-item">
-              <span class="extra-option-left">
-                <input type="checkbox" value="삶은 계란 2알" data-price="1500">
-                <span>삶은 계란 2알</span>
-              </span>
-              <span class="extra-option-price">+1,500원</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- 사이드 추가 (중복 선택 가능) -->
-        <div class="detail-option-box">
-          <div class="option-header-row">
-            <span class="option-label">사이드 추가</span>
-            <span class="option-sub-text">선택 가능</span>
-          </div>
-          <div class="extra-option-list" id="sideGroup">
-            <label class="extra-option-item">
-              <span class="extra-option-left">
-                <input type="checkbox" value="모듬 튀김 세트" data-price="6500">
-                <span>모듬 튀김 세트</span>
-              </span>
-              <span class="extra-option-price">+6,500원</span>
-            </label>
-            <label class="extra-option-item">
-              <span class="extra-option-left">
-                <input type="checkbox" value="순대 & 내장" data-price="5000">
-                <span>순대 & 내장</span>
-              </span>
-              <span class="extra-option-price">+5,000원</span>
-            </label>
-            <label class="extra-option-item">
-              <span class="extra-option-left">
-                <input type="checkbox" value="스팸 참치 주먹밥" data-price="4500">
-                <span>스팸 참치 주먹밥</span>
-              </span>
-              <span class="extra-option-price">+4,500원</span>
-            </label>
-            <label class="extra-option-item">
-              <span class="extra-option-left">
-                <input type="checkbox" value="바삭 야끼만두" data-price="4000">
-                <span>바삭 야끼만두</span>
-              </span>
-              <span class="extra-option-price">+4,000원</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- 음료 추가 (중복 선택 가능) -->
-        <div class="detail-option-box">
-          <div class="option-header-row">
-            <span class="option-label">음료 추가</span>
-            <span class="option-sub-text">선택 가능</span>
-          </div>
-          <div class="extra-option-list" id="drinkGroup">
-            <label class="extra-option-item">
-              <span class="extra-option-left">
-                <input type="checkbox" value="쿨피스 복숭아 930ml" data-price="2500">
-                <span>쿨피스 복숭아 930ml</span>
-              </span>
-              <span class="extra-option-price">+2,500원</span>
-            </label>
-            <label class="extra-option-item">
-              <span class="extra-option-left">
-                <input type="checkbox" value="코카콜라 500ml" data-price="2000">
-                <span>코카콜라 500ml</span>
-              </span>
-              <span class="extra-option-price">+2,000원</span>
-            </label>
-            <label class="extra-option-item">
-              <span class="extra-option-left">
-                <input type="checkbox" value="칠성사이다 500ml" data-price="2000">
-                <span>칠성사이다 500ml</span>
-              </span>
-              <span class="extra-option-price">+2,000원</span>
-            </label>
-            <label class="extra-option-item">
-              <span class="extra-option-left">
-                <input type="checkbox" value="제로 콜라 500ml" data-price="2000">
-                <span>제로 콜라 500ml</span>
+                <input type="checkbox" value="중국당면 추가" data-price="2000">
+                <span>중국당면 추가</span>
               </span>
               <span class="extra-option-price">+2,000원</span>
             </label>
           </div>
         </div>
 
-        <!-- 수량 -->
+        <!-- 수량 선택 -->
         <div class="detail-qty-box">
           <span class="option-label">수량</span>
           <div class="qty-control">
-            <button type="button" id="qtyMinus">-</button>
-            <span id="qtyValue">1</span>
-            <button type="button" id="qtyPlus">+</button>
+            <button type="button" id="minusBtn" aria-label="수량 감소">-</button>
+            <span id="qtyVal">1</span>
+            <button type="button" id="plusBtn" aria-label="수량 증가">+</button>
           </div>
         </div>
 
-        <!-- 총 선택 금액 요약 -->
+        <!-- 총 상품 금액 -->
         <div class="detail-total-box">
           <span>총 주문 금액</span>
-          <strong id="detailTotalPrice">14,000원</strong>
+          <strong id="detailTotalPrice">0원</strong>
         </div>
       </div>
 
+      <!-- 장바구니 담기 / 바로 결제 -->
       <div class="bottom-fixed-bar">
         <button type="button" class="sub-action-btn" id="addCartBtn">장바구니 담기</button>
-        <button type="button" class="primary-action-btn" id="directOrderBtn">결제하기</button>
+        <button type="button" class="primary-action-btn" id="buyNowBtn">바로 결제</button>
       </div>
     </main>
 
-    <div class="toast-msg" id="toastMsg">장바구니에 담겼습니다.</div>
+    <div class="toast-msg" id="toastMsg">장바구니에 담았습니다.</div>
   </div>
 
   <script>
     lucide.createIcons();
+
+    const menuData = [
+      { id: 1, name: '입덕 오리지널 떡볶이', price: 14000, img: '../../Img/menu1.jpg', desc: '매콤달콤한 기본 양념과 쫄깃한 쌀떡의 조화' },
+      { id: 2, name: '눈꽃 치즈 떡볶이', price: 16500, img: '../../Img/menu2.jpg', desc: '고소한 치즈가 듬뿍 올라간 인기 메뉴' },
+      { id: 3, name: '로제 크림 떡볶이', price: 17000, img: '../../Img/menu3.jpg', desc: '부드러운 크림과 매콤함이 어우러진 로제 떡볶이' },
+      { id: 4, name: '불닭 킬러 매운 떡볶이', price: 16000, img: '../../Img/menu4.jpg', desc: '스트레스가 풀리는 화끈한 매운맛' },
+      { id: 5, name: '가래떡 떡볶이', price: 15000, img: '../../Img/menu5.jpg', desc: '통통한 가래떡을 썰어 넣어 씹는 맛이 일품' },
+      { id: 6, name: '어묵 듬뿍 떡볶이', price: 15500, img: '../../Img/menu6.jpg', desc: '부산 어묵이 가득 들어간 감칠맛 떡볶이' },
+      { id: 7, name: '바삭 모듬 튀김', price: 12000, img: '../../Img/menu7.jpg', desc: '김말이, 오징어, 고구마, 만두로 구성된 튀김 세트' },
+      { id: 8, name: '국물 떡볶이 + 순대 세트', price: 19500, img: '../../Img/menu8.jpg', desc: '숟가락으로 떠먹는 국물 떡볶이와 찰순대 구성' }
+    ];
+
+    const spiceDescriptions = {
+      '순한맛': '진라면 순한맛~신라면보다 훨씬 약한 수준입니다. 매운맛이 거의 느껴지지 않아 매운 음식을 잘 못 드시는 분이나 어린이도 부담 없이 드실 수 있습니다.',
+      '보통맛': '신라면 기준 약간 매콤한 정도입니다. 먹다 보면 은은하게 얼큰하고 매운맛이 올라오며, 매운 음식을 무난하게 즐기시는 분께 가장 적당합니다.',
+      '매운맛': '불닭볶음면 수준으로 혀가 얼얼할 만큼 확실히 매운맛입니다. 매운맛 마니아나 스트레스 해소용 매운맛을 원하시는 분께 추천합니다.'
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const menuId = Number(params.get('id')) || 1;
+    const selectedMenu = menuData.find((m) => m.id === menuId) || menuData[0];
+
+    document.getElementById('detailImg').src = selectedMenu.img;
+    document.getElementById('detailImg').alt = selectedMenu.name;
+    document.getElementById('detailTitle').textContent = selectedMenu.name;
+    document.getElementById('detailDesc').textContent = selectedMenu.desc;
+    document.getElementById('detailPrice').textContent = `${selectedMenu.price.toLocaleString()}원`;
+
+    let selectedSpice = '순한맛';
+    let qty = 1;
 
     function getLoggedInUser() {
       return JSON.parse(localStorage.getItem('tteokbokki_user') || 'null');
@@ -251,141 +205,133 @@
       }
     }
 
-    const menuCatalog = {
-      m1: { id: 'm1', name: '오리지널 입덕볶이', desc: '매콤달콤 기본 대표 떡볶이', price: 14000, img: '../../img/menu1.jpg' },
-      m2: { id: 'm2', name: '로제 입덕볶이', desc: '부드러운 크림과 매콤 소스의 조화', price: 16000, img: '../../img/menu2.jpg' },
-      m3: { id: 'm3', name: '마라 입덕볶이', desc: '얼얼한 중독성 있는 마라 풍미', price: 17000, img: '../../img/menu3.jpg' },
-      m4: { id: 'm4', name: '치즈폭탄 입덕볶이', desc: '고소한 치즈가 듬뿍 올라간 떡볶이', price: 16500, img: '../../img/menu4.jpg' },
-      m5: { id: 'm5', name: '모듬 튀김 세트', desc: '김말이, 오징어, 야채, 만두 튀김', price: 6500, img: '../../img/menu2-1.jpg' },
-      m6: { id: 'm6', name: '순대 & 내장', desc: '쫀득한 찰순대와 모듬 내장', price: 5000, img: '../../img/menu2-2.jpg' },
-      m7: { id: 'm7', name: '스팸 참치 주먹밥', desc: '고소한 스팸과 참치로 만든 주먹밥', price: 4500, img: '../../img/menu2-3.jpg' },
-      m8: { id: 'm8', name: '바삭 야끼만두', desc: '소스에 찍어 먹기 좋은 바삭한 야끼만두', price: 4000, img: '../../img/menu2-4.jpg' },
-      m9: { id: 'm9', name: '입덕 2인 커플 세트', desc: '떡볶이 + 모듬튀김 + 주먹밥 + 쿨피스', price: 23000, img: '../../img/menu3-1.jpg' },
-      m10: { id: 'm10', name: '로제 & 튀김 세트', desc: '로제 떡볶이 + 모듬튀김 + 음료 구성', price: 24500, img: '../../img/menu3-2.jpg' },
-      m11: { id: 'm11', name: '마라 & 주먹밥 세트', desc: '마라 떡볶이 + 스팸 참치 주먹밥 조합', price: 22500, img: '../../img/menu3-3.jpg' },
-      m12: { id: 'm12', name: '입덕 패밀리 파티 세트', desc: '여럿이 함께 즐기는 푸짐한 패밀리 세트', price: 32000, img: '../../img/menu3-4.jpg' }
-    };
+    function updateCartBadge() {
+      const cart = JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      const badge = document.getElementById('cartBadge');
+      if (!badge) return;
+      if (totalQty > 0) {
+        badge.textContent = totalQty;
+        badge.style.display = 'flex';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
 
-    const params = new URLSearchParams(window.location.search);
-    const menuId = params.get('id') || 'm1';
-    const currentItem = menuCatalog[menuId] || menuCatalog.m1;
+    function updateSpiceGuide() {
+      document.getElementById('spiceGuideTitle').textContent = selectedSpice;
+      document.getElementById('spiceGuideDesc').textContent =
+        spiceDescriptions[selectedSpice] || spiceDescriptions['보통맛'];
+    }
 
-    let qty = 1;
-    let selectedSpicy = '순한맛';
-
-    document.getElementById('detailImg').src = currentItem.img;
-    document.getElementById('detailTitle').textContent = currentItem.name;
-    document.getElementById('detailDesc').textContent = currentItem.desc;
-    document.getElementById('detailPrice').textContent = `${currentItem.price.toLocaleString()}원`;
-
-    function getCheckedOptions(containerId) {
-      const checked = Array.from(document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`));
-      return checked.map((input) => ({
+    function getSelectedExtras() {
+      const checkedInputs = Array.from(
+        document.querySelectorAll('#extraOptionList input[type="checkbox"]:checked')
+      );
+      return checkedInputs.map((input) => ({
         name: input.value,
-        price: Number(input.dataset.price)
+        price: Number(input.dataset.price) || 0
       }));
     }
 
-    function calculateUnitPrice() {
-      const toppings = getCheckedOptions('toppingGroup');
-      const sides = getCheckedOptions('sideGroup');
-      const drinks = getCheckedOptions('drinkGroup');
-      const extraSum = [...toppings, ...sides, ...drinks].reduce((sum, opt) => sum + opt.price, 0);
-      return currentItem.price + extraSum;
+    function getUnitPrice() {
+      const extrasTotal = getSelectedExtras().reduce((sum, extra) => sum + extra.price, 0);
+      return selectedMenu.price + extrasTotal;
     }
 
-    function updateDetailTotalPrice() {
-      const unitPrice = calculateUnitPrice();
-      const total = unitPrice * qty;
+    function updateTotalPrice() {
+      const total = getUnitPrice() * qty;
       document.getElementById('detailTotalPrice').textContent = `${total.toLocaleString()}원`;
     }
 
-    document.querySelectorAll('.extra-option-list input[type="checkbox"]').forEach((checkbox) => {
-      checkbox.addEventListener('change', (e) => {
-        const label = e.target.closest('.extra-option-item');
-        if (label) {
-          label.classList.toggle('checked', e.target.checked);
-        }
-        updateDetailTotalPrice();
+    document.querySelectorAll('#spiceGroup .tag-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#spiceGroup .tag-btn').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedSpice = btn.dataset.spice;
+        updateSpiceGuide();
       });
     });
 
-    function getCart() {
-      return JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
+    document.querySelectorAll('#extraOptionList input[type="checkbox"]').forEach((checkbox) => {
+      checkbox.addEventListener('change', () => {
+        const label = checkbox.closest('.extra-option-item');
+        if (label) {
+          label.classList.toggle('checked', checkbox.checked);
+        }
+        updateTotalPrice();
+      });
+    });
+
+    document.getElementById('minusBtn').addEventListener('click', () => {
+      if (qty > 1) {
+        qty -= 1;
+        document.getElementById('qtyVal').textContent = qty;
+        updateTotalPrice();
+      }
+    });
+
+    document.getElementById('plusBtn').addEventListener('click', () => {
+      qty += 1;
+      document.getElementById('qtyVal').textContent = qty;
+      updateTotalPrice();
+    });
+
+    function buildCartItem() {
+      const extras = getSelectedExtras();
+      const extraNames = extras.map((e) => e.name);
+      const optionSummary = extraNames.length > 0
+        ? `${selectedSpice} · ${extraNames.join(', ')}`
+        : selectedSpice;
+
+      return {
+        id: selectedMenu.id,
+        name: `${selectedMenu.name} (${optionSummary})`,
+        price: getUnitPrice(),
+        img: selectedMenu.img,
+        qty
+      };
     }
 
-    function saveCart(cart) {
+    function addToCart() {
+      const cart = JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
+      const newItem = buildCartItem();
+      const existing = cart.find((item) => item.name === newItem.name);
+
+      if (existing) {
+        existing.qty += newItem.qty;
+      } else {
+        cart.push(newItem);
+      }
+
       localStorage.setItem('tteokbokki_cart', JSON.stringify(cart));
       updateCartBadge();
     }
 
-    function updateCartBadge() {
-      const totalCount = getCart().reduce((sum, item) => sum + item.qty, 0);
-      const badge = document.getElementById('cartBadge');
-      badge.textContent = totalCount;
-      badge.style.display = totalCount > 0 ? 'flex' : 'none';
-    }
-
-    function pushItemToCart() {
-      const cart = getCart();
-      const toppings = getCheckedOptions('toppingGroup').map((o) => o.name);
-      const sides = getCheckedOptions('sideGroup').map((o) => o.name);
-      const drinks = getCheckedOptions('drinkGroup').map((o) => o.name);
-
-      const optionParts = [selectedSpicy];
-      if (toppings.length > 0) optionParts.push(`토핑: ${toppings.join(', ')}`);
-      if (sides.length > 0) optionParts.push(`사이드: ${sides.join(', ')}`);
-      if (drinks.length > 0) optionParts.push(`음료: ${drinks.join(', ')}`);
-
-      const optionLabel = optionParts.join(' / ');
-      const cartKey = `${currentItem.id}_${optionLabel}`;
-      const unitPrice = calculateUnitPrice();
-      const existing = cart.find((c) => c.id === cartKey);
-
-      if (existing) {
-        existing.qty += qty;
-      } else {
-        cart.push({
-          id: cartKey,
-          name: `${currentItem.name} (${optionLabel})`,
-          price: unitPrice,
-          img: currentItem.img,
-          qty: qty
-        });
-      }
-      saveCart(cart);
-    }
-
-    document.querySelectorAll('#spicyGroup .tag-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#spicyGroup .tag-btn').forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedSpicy = btn.dataset.spicy;
-      });
-    });
-
-    document.getElementById('qtyMinus').addEventListener('click', () => {
-      if (qty > 1) {
-        qty -= 1;
-        document.getElementById('qtyValue').textContent = qty;
-        updateDetailTotalPrice();
-      }
-    });
-
-    document.getElementById('qtyPlus').addEventListener('click', () => {
-      qty += 1;
-      document.getElementById('qtyValue').textContent = qty;
-      updateDetailTotalPrice();
-    });
-
     document.getElementById('addCartBtn').addEventListener('click', () => {
-      pushItemToCart();
-      showToast('장바구니에 담겼습니다.');
+      addToCart();
+      showToast('장바구니에 담았습니다.');
     });
 
-    document.getElementById('directOrderBtn').addEventListener('click', () => {
-      pushItemToCart();
+    document.getElementById('buyNowBtn').addEventListener('click', () => {
+      const cart = JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
+      const newItem = buildCartItem();
+      const existing = cart.find((item) => item.name === newItem.name);
+      if (existing) {
+        existing.qty += newItem.qty;
+      } else {
+        cart.push(newItem);
+      }
+      localStorage.setItem('tteokbokki_cart', JSON.stringify(cart));
       window.location.href = '../payment/payments.html';
+    });
+
+    document.getElementById('backBtn').addEventListener('click', () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = '../../index.html';
+      }
     });
 
     const menuOpenBtn = document.getElementById('menuOpenBtn');
@@ -407,9 +353,10 @@
       drawerOverlay.classList.remove('open');
     });
 
-    updateDetailTotalPrice();
-    updateCartBadge();
     renderDrawerAuthState();
+    updateCartBadge();
+    updateSpiceGuide();
+    updateTotalPrice();
   </script>
 </body>
 </html>
