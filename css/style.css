@@ -411,6 +411,7 @@ img {
 
 .recommend-card {
   position: relative;
+  display: block;
   flex: 0 0 280px;
   height: 310px;
   background: linear-gradient(160deg, var(--brand-red) 0%, var(--brand-orange) 100%);
@@ -418,6 +419,7 @@ img {
   padding: 28px 20px 0;
   text-align: center;
   color: #ffffff;
+  cursor: pointer;
   transition: opacity 0.3s ease;
 }
 
@@ -738,9 +740,66 @@ img {
   margin-top: 12px;
 }
 
+.option-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .option-label {
   font-size: 15px;
   font-weight: 500;
+}
+
+.option-sub-text {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.extra-option-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.extra-option-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1px solid var(--border-warm);
+  border-radius: 10px;
+  background-color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.extra-option-item.checked {
+  border-color: var(--brand-red);
+  background-color: #FFF4EA;
+}
+
+.extra-option-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.extra-option-left input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--brand-red);
+  cursor: pointer;
+}
+
+.extra-option-price {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-sub);
 }
 
 .detail-qty-box {
@@ -750,6 +809,25 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.detail-total-box {
+  margin-top: 20px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background-color: #FFF3E8;
+  border: 1px solid var(--border-warm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.detail-total-box strong {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--brand-red);
 }
 
 .qty-control {
@@ -785,6 +863,121 @@ img {
 .qty-control.small span {
   min-width: 28px;
   font-size: 13px;
+}
+
+/* 쿠폰함 페이지 */
+.coupon-register-row {
+  display: flex;
+  gap: 8px;
+}
+
+.coupon-register-row .form-input {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.coupon-add-btn {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 10px;
+  background-color: var(--brand-red);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.coupon-section-head {
+  margin: 20px 0 12px;
+}
+
+.coupon-count {
+  color: var(--brand-red);
+}
+
+.coupon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.coupon-card {
+  background-color: #ffffff;
+  border: 1px solid var(--border-warm);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.coupon-card.selected {
+  border: 1.5px solid var(--brand-red);
+  background-color: #FFF6EE;
+}
+
+.coupon-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.coupon-card-top .info-badge {
+  margin-bottom: 0;
+}
+
+.coupon-expire {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.coupon-amount {
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--brand-red);
+}
+
+.coupon-title {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.coupon-condition {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-sub);
+}
+
+.coupon-card-actions {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border-warm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.coupon-apply-btn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid var(--brand-red);
+  background-color: #ffffff;
+  color: var(--brand-red);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.coupon-apply-btn.active {
+  background-color: var(--brand-red);
+  color: #ffffff;
+}
+
+.coupon-order-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-sub);
 }
 
 /* 장바구니 페이지 */
@@ -946,6 +1139,41 @@ img {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+}
+
+.coupon-checkout-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.coupon-checkout-header .checkout-heading {
+  margin-bottom: 0;
+}
+
+.coupon-manage-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--brand-red);
+}
+
+.coupon-manage-link:hover {
+  text-decoration: underline;
+}
+
+.coupon-select {
+  margin-bottom: 6px;
+}
+
+.coupon-helper-msg {
+  font-size: 12px;
+  color: var(--text-sub);
+  line-height: 1.4;
+}
+
+.coupon-discount-text {
+  color: var(--brand-red);
 }
 
 /* 결제 완료 페이지 */

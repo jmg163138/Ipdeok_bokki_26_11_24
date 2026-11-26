@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>입덕볶이 - 결제 페이지</title>
+  <title>입덕볶이 - 주문/결제</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,140 +12,368 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- 뒤로가기 -> 메인 페이지 -->
+    <!-- 뒤로가기 -> 장바구니 -->
     <header class="header">
-      <a href="../../index.html" class="icon-btn" aria-label="메인으로 돌아가기">
+      <a href="../cart/cart.html" class="icon-btn" aria-label="장바구니로 돌아가기">
         <i data-lucide="chevron-left"></i>
       </a>
-      <h1 class="header-title">주문 / 결제</h1>
-      <div style="width: 28px;"></div>
+      <h1 class="header-title">주문/결제</h1>
+      <button type="button" class="menu-btn" id="menuOpenBtn" aria-label="메뉴 열기">
+        <i data-lucide="menu"></i>
+      </button>
     </header>
 
-    <main class="sub-main checkout-main">
-      <!-- 주문 방식 선택 -->
+    <!-- 슬라이드 메뉴 -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <nav class="side-drawer" id="sideDrawer" aria-hidden="true">
+      <div class="side-drawer-inner">
+        <div class="drawer-header">
+          <button type="button" class="close-btn" id="menuCloseBtn" aria-label="메뉴 닫기">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div class="drawer-user-header" id="drawerUserInfo">로그인하고 나만의 떡볶이 취향을 저장해보세요</div>
+        <ul class="drawer-menu">
+          <li><a href="../lists/list.html">떡볶이 메뉴</a></li>
+          <li><a href="../coupon/coupon.html">쿠폰함</a></li>
+          <li><a href="../about/about.html">소개</a></li>
+          <li><a href="../community/community.html">커뮤니티</a></li>
+          <li id="drawerAuthItem"><a href="../login/login.html" id="drawerAuthLink">로그인</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="sub-main">
+      <!-- 수령 방식 선택 -->
       <section class="checkout-section">
-        <h2 class="checkout-heading">주문 방식</h2>
-        <div class="order-btn-row" id="orderTypeGroup">
-          <button type="button" class="select-box-btn active" data-type="delivery">배달 주문</button>
-          <button type="button" class="select-box-btn" data-type="pickup">포장 주문</button>
+        <h2 class="checkout-heading">수령 방식</h2>
+        <div class="order-btn-row">
+          <button type="button" class="select-box-btn active" data-type="배달">배달 주문</button>
+          <button type="button" class="select-box-btn" data-type="포장">매장 포장</button>
         </div>
       </section>
 
-      <!-- 배달 주소 입력 -->
+      <!-- 배달/연락처 정보 -->
       <section class="checkout-section" id="addressSection">
-        <h2 class="checkout-heading">배달 주소</h2>
-        <input type="text" class="form-input" id="addressInput" placeholder="주소를 입력해 주세요" value="서울시 강남구 테헤란로 123">
-        <input type="text" class="form-input" id="requestInput" placeholder="요청사항 (예: 문 앞에 놓아주세요)">
+        <h2 class="checkout-heading">배달 정보</h2>
+        <input type="text" id="addrInput" class="form-input" placeholder="배달 받으실 주소를 입력하세요">
+        <input type="tel" id="phoneInput" class="form-input" placeholder="연락처를 입력하세요 (예: 010-1234-5678)">
       </section>
 
-      <!-- 주문 상품 요약 -->
+      <!-- 주문 메뉴 확인 -->
       <section class="checkout-section">
-        <h2 class="checkout-heading">주문 내역</h2>
+        <h2 class="checkout-heading">주문 메뉴</h2>
         <div id="checkoutItems"></div>
       </section>
 
-      <!-- 결제 수단 -->
+      <!-- 쿠폰 선택 -->
+      <section class="checkout-section">
+        <div class="coupon-checkout-header">
+          <h2 class="checkout-heading">쿠폰 선택</h2>
+          <a href="../coupon/coupon.html" class="coupon-manage-link">쿠폰함 관리</a>
+        </div>
+        <select id="couponSelect" class="form-input coupon-select" aria-label="사용할 쿠폰 선택"></select>
+        <p class="coupon-helper-msg" id="couponHelperMsg"></p>
+      </section>
+
+      <!-- 결제 수단 선택 -->
       <section class="checkout-section">
         <h2 class="checkout-heading">결제 수단</h2>
-        <div class="pay-method-grid" id="payMethodGroup">
-          <button type="button" class="select-box-btn active" data-method="신용/체크카드">신용/체크카드</button>
-          <button type="button" class="select-box-btn" data-method="카카오페이">카카오페이</button>
-          <button type="button" class="select-box-btn" data-method="네이버페이">네이버페이</button>
-          <button type="button" class="select-box-btn" data-method="만나서 결제">만나서 결제</button>
+        <div class="pay-method-grid" id="payMethodGrid">
+          <button type="button" class="select-box-btn active" data-pay="신용/체크카드">신용/체크카드</button>
+          <button type="button" class="select-box-btn" data-pay="간편결제">간편결제</button>
+          <button type="button" class="select-box-btn" data-pay="계좌이체">계좌이체</button>
+          <button type="button" class="select-box-btn" data-pay="만나서 결제">만나서 결제</button>
         </div>
       </section>
 
       <!-- 최종 결제 금액 -->
       <div class="price-summary-box">
         <div class="summary-row">
-          <span>상품 금액</span>
-          <span id="checkoutSubTotal">0원</span>
+          <span>총 주문금액</span>
+          <strong id="payProductPrice">0원</strong>
         </div>
         <div class="summary-row">
-          <span>배달비</span>
-          <span id="checkoutDelivery">3,000원</span>
+          <span>배달팁</span>
+          <span id="payDeliveryFee">3,000원</span>
+        </div>
+        <div class="summary-row">
+          <span>쿠폰 할인</span>
+          <strong class="coupon-discount-text" id="payCouponDiscount">-0원</strong>
         </div>
         <div class="summary-row total">
-          <span>총 결제 금액</span>
-          <strong id="checkoutFinalTotal">0원</strong>
+          <span>최종 결제금액</span>
+          <strong id="payFinalPrice">0원</strong>
         </div>
       </div>
 
+      <!-- 결제 완료 -> 결제 완료 화면 -->
       <div class="bottom-fixed-bar">
-        <button type="button" class="primary-action-btn full" id="completePayBtn">결제하기</button>
+        <button type="button" class="primary-action-btn full" id="submitPaymentBtn">결제 완료</button>
       </div>
     </main>
+
+    <div class="toast-msg" id="toastMsg">로그아웃되었습니다.</div>
   </div>
 
   <script>
     lucide.createIcons();
 
-    const cart = JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
-    let orderType = 'delivery';
-    let payMethod = '신용/체크카드';
-
-    function renderCheckout() {
-      const checkoutItems = document.getElementById('checkoutItems');
-      if (cart.length === 0) {
-        checkoutItems.innerHTML = '<p class="empty-text">장바구니에 담은 메뉴가 없습니다. 메뉴에서 담아주세요.</p>';
-      } else {
-        checkoutItems.innerHTML = cart.map((item) => `
-          <div class="checkout-item-row">
-            <span>${item.name} × ${item.qty}</span>
-            <strong>${(item.price * item.qty).toLocaleString()}원</strong>
-          </div>
-        `).join('');
-      }
-
-      const subTotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const delivery = orderType === 'delivery' && subTotal > 0 ? 3000 : 0;
-
-      document.getElementById('checkoutSubTotal').textContent = `${subTotal.toLocaleString()}원`;
-      document.getElementById('checkoutDelivery').textContent = `${delivery.toLocaleString()}원`;
-      document.getElementById('checkoutFinalTotal').textContent = `${(subTotal + delivery).toLocaleString()}원`;
+    function getLoggedInUser() {
+      return JSON.parse(localStorage.getItem('tteokbokki_user') || 'null');
     }
 
-    document.querySelectorAll('#orderTypeGroup .select-box-btn').forEach((btn) => {
+    function showToast(text) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    function renderDrawerAuthState() {
+      const user = getLoggedInUser();
+      const drawerUserInfo = document.getElementById('drawerUserInfo');
+      const drawerAuthItem = document.getElementById('drawerAuthItem');
+
+      if (user && user.id) {
+        drawerUserInfo.textContent = `${user.id}님`;
+        drawerUserInfo.classList.add('logged-in');
+        drawerAuthItem.innerHTML = '<button type="button" class="drawer-logout-btn" id="drawerLogoutBtn">로그아웃</button>';
+        document.getElementById('drawerLogoutBtn').addEventListener('click', () => {
+          localStorage.removeItem('tteokbokki_user');
+          renderDrawerAuthState();
+          showToast('로그아웃되었습니다.');
+        });
+      } else {
+        drawerUserInfo.textContent = '로그인하고 나만의 떡볶이 취향을 저장해보세요';
+        drawerUserInfo.classList.remove('logged-in');
+        drawerAuthItem.innerHTML = '<a href="../login/login.html" id="drawerAuthLink">로그인</a>';
+      }
+    }
+
+    const defaultCoupons = [
+      {
+        id: 'cp1',
+        title: '첫 주문 환영 3,000원 할인 쿠폰',
+        discount: 3000,
+        minOrder: 15000,
+        expire: '2026.12.31까지',
+        tag: '배달 · 포장'
+      },
+      {
+        id: 'cp2',
+        title: '배달팁 3,000원 무료 쿠폰',
+        discount: 3000,
+        minOrder: 18000,
+        expire: '2026.12.31까지',
+        tag: '배달 전용'
+      },
+      {
+        id: 'cp3',
+        title: '세트 메뉴 2,000원 할인 쿠폰',
+        discount: 2000,
+        minOrder: 20000,
+        expire: '2026.12.15까지',
+        tag: '세트 전용'
+      }
+    ];
+
+    function getCoupons() {
+      const saved = localStorage.getItem('tteokbokki_coupons');
+      if (!saved) {
+        localStorage.setItem('tteokbokki_coupons', JSON.stringify(defaultCoupons));
+        return defaultCoupons;
+      }
+      return JSON.parse(saved);
+    }
+
+    const cart = JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
+    const checkoutItems = document.getElementById('checkoutItems');
+    const couponSelect = document.getElementById('couponSelect');
+    const couponHelperMsg = document.getElementById('couponHelperMsg');
+
+    let orderType = '배달';
+    let payMethod = '신용/체크카드';
+    let selectedCouponId = '';
+
+    const savedCoupon = JSON.parse(localStorage.getItem('tteokbokki_selected_coupon') || 'null');
+    if (savedCoupon && savedCoupon.id) {
+      selectedCouponId = savedCoupon.id;
+    }
+
+    if (cart.length === 0) {
+      checkoutItems.innerHTML = '<p class="info-desc">장바구니에 담긴 메뉴가 없습니다.</p>';
+    } else {
+      checkoutItems.innerHTML = cart.map((item) => `
+        <div class="checkout-item-row">
+          <span>${item.name} × ${item.qty}</span>
+          <strong>${(item.price * item.qty).toLocaleString()}원</strong>
+        </div>
+      `).join('');
+    }
+
+    const productTotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+    function renderCouponOptions() {
+      const coupons = getCoupons();
+      const optionsHTML = [
+        '<option value="">쿠폰 선택 안 함</option>',
+        ...coupons.map((cp) => {
+          const disabledByMin = productTotal < cp.minOrder;
+          const disabledByType = cp.tag === '배달 전용' && orderType !== '배달';
+          const isDisabled = disabledByMin || disabledByType;
+          const statusNote = disabledByMin
+            ? ` (${cp.minOrder.toLocaleString()}원 이상 가능)`
+            : disabledByType
+              ? ' (배달 주문 전용)'
+              : '';
+          return `<option value="${cp.id}" ${isDisabled ? 'disabled' : ''}>${cp.title} (-${cp.discount.toLocaleString()}원)${statusNote}</option>`;
+        })
+      ];
+
+      couponSelect.innerHTML = optionsHTML.join('');
+
+      const validSelected = coupons.find(
+        (cp) =>
+          cp.id === selectedCouponId &&
+          productTotal >= cp.minOrder &&
+          !(cp.tag === '배달 전용' && orderType !== '배달')
+      );
+
+      if (validSelected) {
+        couponSelect.value = validSelected.id;
+        selectedCouponId = validSelected.id;
+      } else {
+        couponSelect.value = '';
+        selectedCouponId = '';
+      }
+    }
+
+    function updateSummary() {
+      const delivery = orderType === '배달' && cart.length > 0 ? 3000 : 0;
+      const coupons = getCoupons();
+      const activeCoupon = coupons.find((cp) => cp.id === selectedCouponId) || null;
+      const discount = activeCoupon ? Math.min(activeCoupon.discount, productTotal + delivery) : 0;
+      const finalPrice = Math.max(0, productTotal + delivery - discount);
+
+      document.getElementById('payProductPrice').textContent = `${productTotal.toLocaleString()}원`;
+      document.getElementById('payDeliveryFee').textContent = `${delivery.toLocaleString()}원`;
+      document.getElementById('payCouponDiscount').textContent = discount > 0 ? `-${discount.toLocaleString()}원` : '-0원';
+      document.getElementById('payFinalPrice').textContent = `${finalPrice.toLocaleString()}원`;
+
+      if (activeCoupon) {
+        couponHelperMsg.textContent = `"${activeCoupon.title}" 적용으로 ${discount.toLocaleString()}원이 할인됩니다.`;
+      } else if (getCoupons().length === 0) {
+        couponHelperMsg.textContent = '사용 가능한 보유 쿠폰이 없습니다.';
+      } else {
+        couponHelperMsg.textContent = '할인받을 쿠폰을 선택해 주세요.';
+      }
+    }
+
+    couponSelect.addEventListener('change', (e) => {
+      selectedCouponId = e.target.value;
+      const coupons = getCoupons();
+      const chosen = coupons.find((cp) => cp.id === selectedCouponId);
+      if (chosen) {
+        localStorage.setItem('tteokbokki_selected_coupon', JSON.stringify(chosen));
+      } else {
+        localStorage.removeItem('tteokbokki_selected_coupon');
+      }
+      updateSummary();
+    });
+
+    document.querySelectorAll('[data-type]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('#orderTypeGroup .select-box-btn').forEach((b) => b.classList.remove('active'));
+        document.querySelectorAll('[data-type]').forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
         orderType = btn.dataset.type;
-        document.getElementById('addressSection').style.display = orderType === 'delivery' ? 'block' : 'none';
-        renderCheckout();
+        document.getElementById('addressSection').style.display = orderType === '배달' ? 'block' : 'none';
+        renderCouponOptions();
+        updateSummary();
       });
     });
 
-    document.querySelectorAll('#payMethodGroup .select-box-btn').forEach((btn) => {
+    document.querySelectorAll('#payMethodGrid .select-box-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('#payMethodGroup .select-box-btn').forEach((b) => b.classList.remove('active'));
+        document.querySelectorAll('#payMethodGrid .select-box-btn').forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
-        payMethod = btn.dataset.method;
+        payMethod = btn.dataset.pay;
       });
     });
 
-    document.getElementById('completePayBtn').addEventListener('click', () => {
-      const subTotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const delivery = orderType === 'delivery' && subTotal > 0 ? 3000 : 0;
-      const addressVal = document.getElementById('addressInput').value.trim();
-
-      if (orderType === 'delivery' && !addressVal) {
-        alert('배달 주소를 입력해 주세요.');
+    document.getElementById('submitPaymentBtn').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('결제할 메뉴가 없습니다.');
         return;
       }
 
-      const lastOrder = {
-        orderNo: 'ORD-' + Math.floor(100000 + Math.random() * 900000),
-        total: subTotal + delivery,
-        type: orderType === 'delivery' ? '배달 주문' : '포장 주문',
-        method: payMethod,
-        items: cart
+      const addr = document.getElementById('addrInput').value.trim();
+      const phone = document.getElementById('phoneInput').value.trim();
+
+      if (orderType === '배달' && !addr) {
+        alert('배달 주소를 입력해주세요.');
+        return;
+      }
+      if (!phone) {
+        alert('연락처를 입력해주세요.');
+        return;
+      }
+
+      const delivery = orderType === '배달' ? 3000 : 0;
+      const coupons = getCoupons();
+      const activeCoupon = coupons.find((cp) => cp.id === selectedCouponId) || null;
+      const discount = activeCoupon ? Math.min(activeCoupon.discount, productTotal + delivery) : 0;
+      const finalPrice = Math.max(0, productTotal + delivery - discount);
+
+      const orderInfo = {
+        orderType,
+        addr: orderType === '배달' ? addr : '매장 방문 포장',
+        phone,
+        payMethod,
+        items: cart,
+        productTotal,
+        delivery,
+        couponName: activeCoupon ? activeCoupon.title : '미사용',
+        discount,
+        finalPrice
       };
-      localStorage.setItem('last_order_info', JSON.stringify(lastOrder));
+
+      if (activeCoupon) {
+        const remainingCoupons = coupons.filter((cp) => cp.id !== activeCoupon.id);
+        localStorage.setItem('tteokbokki_coupons', JSON.stringify(remainingCoupons));
+      }
+
+      localStorage.setItem('tteokbokki_last_order', JSON.stringify(orderInfo));
       localStorage.removeItem('tteokbokki_cart');
+      localStorage.removeItem('tteokbokki_selected_coupon');
       window.location.href = '../payment_finish/payments_finish.html';
     });
 
-    renderCheckout();
+    const menuOpenBtn = document.getElementById('menuOpenBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const sideDrawer = document.getElementById('sideDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+
+    menuOpenBtn.addEventListener('click', () => {
+      renderDrawerAuthState();
+      sideDrawer.classList.add('open');
+      drawerOverlay.classList.add('open');
+    });
+    menuCloseBtn.addEventListener('click', () => {
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    });
+    drawerOverlay.addEventListener('click', () => {
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    });
+
+    renderDrawerAuthState();
+    renderCouponOptions();
+    updateSummary();
   </script>
 </body>
 </html>
+```[cite: 3]
+
+다음으로 `Sub/payment_finish/payments_finish.html` 드릴까요?[cite: 3]

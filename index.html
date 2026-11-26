@@ -37,9 +37,10 @@
             <i data-lucide="x"></i>
           </button>
         </div>
-        <div class="drawer-user-header" id="drawerUserInfo">로그인하고 더 편하게 주문해보세요</div>
+        <div class="drawer-user-header" id="drawerUserInfo">로그인하고 나만의 떡볶이 취향을 저장해보세요</div>
         <ul class="drawer-menu">
           <li><a href="Sub/lists/list.html">떡볶이 메뉴</a></li>
+          <li><a href="Sub/coupon/coupon.html">쿠폰함</a></li>
           <li><a href="Sub/about/about.html">소개</a></li>
           <li><a href="Sub/community/community.html">커뮤니티</a></li>
           <li id="drawerAuthItem"><a href="Sub/login/login.html" id="drawerAuthLink">로그인</a></li>
@@ -69,7 +70,7 @@
         <a href="Sub/lists/list.html?type=delivery" class="order-btn full-btn">배달</a>
         <div class="order-btn-row">
           <a href="Sub/lists/list.html?type=pickup" class="order-btn sub-order-btn">포장</a>
-          <a href="Sub/cart/cart.html" class="order-btn accent-order-btn">쿠폰</a>
+          <a href="Sub/coupon/coupon.html" class="order-btn accent-order-btn">쿠폰</a>
         </div>
       </section>
 
@@ -239,6 +240,7 @@
         <div class="footer-links">
           <a href="Sub/about/about.html">소개</a>
           <a href="Sub/lists/list.html">메뉴</a>
+          <a href="Sub/coupon/coupon.html">쿠폰함</a>
           <a href="Sub/community/community.html">커뮤니티</a>
           <a href="Sub/login/login.html">로그인</a>
         </div>
@@ -272,7 +274,7 @@
           showToast('로그아웃되었습니다.');
         });
       } else {
-        drawerUserInfo.textContent = '로그인하고 더 편하게 주문해보세요';
+        drawerUserInfo.textContent = '로그인하고 나만의 떡볶이 취향을 저장해보세요';
         drawerUserInfo.classList.remove('logged-in');
         drawerAuthItem.innerHTML = '<a href="Sub/login/login.html" id="drawerAuthLink">로그인</a>';
       }
@@ -376,7 +378,7 @@
 
     setInterval(updateHeroSlide, 3500);
 
-    // 3. 추천메뉴 해시태그 전환 및 좌우 슬라이드
+    // 3. 추천메뉴 해시태그 전환 및 좌우 슬라이드 (카드 전체 영역 클릭 시 메뉴 상세 이동)
     const recommendData = {
       tag1: [
         { id: 'm1', badge: 'BEST 1', title: '오리지널 입덕볶이', img: 'img/recommend1.jpg', link: 'Sub/detail/detail.html?id=m1' },
@@ -412,16 +414,16 @@
 
     function createCardHTML(data, isCenter) {
       return `
-        <div class="recommend-card ${isCenter ? 'center-card' : 'side-card'}">
+        <a href="${data.link}" class="recommend-card ${isCenter ? 'center-card' : 'side-card'}">
           <div class="card-info">
             <span class="badge">${data.badge}</span>
             <p class="card-title">${data.title}</p>
-            <a href="${data.link}" class="card-order-btn">주문하기</a>
+            <span class="card-order-btn">주문하기</span>
           </div>
           <div class="card-img-box">
             <img src="${data.img}" alt="${data.title}">
           </div>
-        </div>
+        </a>
       `;
     }
 

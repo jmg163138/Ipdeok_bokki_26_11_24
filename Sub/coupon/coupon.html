@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입덕볶이 - 쿠폰함</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <a href="../../index.html" class="icon-btn" aria-label="메인으로 돌아가기">
+        <i data-lucide="chevron-left"></i>
+      </a>
+      <h1 class="header-title">쿠폰함</h1>
+      <button type="button" class="menu-btn" id="menuOpenBtn" aria-label="메뉴 열기">
+        <i data-lucide="menu"></i>
+      </button>
+    </header>
+
+    <!-- 슬라이드 메뉴 -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <nav class="side-drawer" id="sideDrawer" aria-hidden="true">
+      <div class="side-drawer-inner">
+        <div class="drawer-header">
+          <button type="button" class="close-btn" id="menuCloseBtn" aria-label="메뉴 닫기">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div class="drawer-user-header" id="drawerUserInfo">로그인하고 나만의 떡볶이 취향을 저장해보세요</div>
+        <ul class="drawer-menu">
+          <li><a href="../lists/list.html">떡볶이 메뉴</a></li>
+          <li><a href="coupon.html">쿠폰함</a></li>
+          <li><a href="../about/about.html">소개</a></li>
+          <li><a href="../community/community.html">커뮤니티</a></li>
+          <li id="drawerAuthItem"><a href="../login/login.html" id="drawerAuthLink">로그인</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="sub-main">
+      <section class="info-card">
+        <span class="info-badge">COUPON</span>
+        <h2 class="info-title">보유 쿠폰 등록 및 선택</h2>
+        <p class="info-desc">쿠폰 코드를 입력해 등록하거나, 결제 페이지에서 사용할 쿠폰을 미리 선택할 수 있습니다.</p>
+
+        <div class="coupon-register-row" style="margin-top: 14px;">
+          <input type="text" id="couponCodeInput" class="form-input" placeholder="쿠폰 코드 입력 (예: IPDEOK1000)">
+          <button type="button" class="coupon-add-btn" id="registerCouponBtn">등록</button>
+        </div>
+      </section>
+
+      <div class="coupon-section-head">
+        <h3 class="info-subtitle" style="margin-bottom: 0;">
+          사용 가능 쿠폰 <span class="coupon-count" id="couponCountText">0장</span>
+        </h3>
+      </div>
+
+      <div class="coupon-list" id="couponListBox"></div>
+
+      <div class="bottom-fixed-bar">
+        <a href="../payment/payments.html" class="primary-action-btn full">결제 페이지로 이동</a>
+      </div>
+    </main>
+
+    <div class="toast-msg" id="toastMsg">로그아웃되었습니다.</div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function getLoggedInUser() {
+      return JSON.parse(localStorage.getItem('tteokbokki_user') || 'null');
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    function renderDrawerAuthState() {
+      const user = getLoggedInUser();
+      const drawerUserInfo = document.getElementById('drawerUserInfo');
+      const drawerAuthItem = document.getElementById('drawerAuthItem');
+
+      if (user && user.id) {
+        drawerUserInfo.textContent = `${user.id}님`;
+        drawerUserInfo.classList.add('logged-in');
+        drawerAuthItem.innerHTML = '<button type="button" class="drawer-logout-btn" id="drawerLogoutBtn">로그아웃</button>';
+        document.getElementById('drawerLogoutBtn').addEventListener('click', () => {
+          localStorage.removeItem('tteokbokki_user');
+          renderDrawerAuthState();
+          showToast('로그아웃되었습니다.');
+        });
+      } else {
+        drawerUserInfo.textContent = '로그인하고 나만의 떡볶이 취향을 저장해보세요';
+        drawerUserInfo.classList.remove('logged-in');
+        drawerAuthItem.innerHTML = '<a href="../login/login.html" id="drawerAuthLink">로그인</a>';
+      }
+    }
+
+    const defaultCoupons = [
+      {
+        id: 'cp1',
+        title: '첫 주문 환영 3,000원 할인 쿠폰',
+        discount: 3000,
+        minOrder: 15000,
+        expire: '2026.12.31까지',
+        tag: '배달 · 포장'
+      },
+      {
+        id: 'cp2',
+        title: '배달팁 3,000원 무료 쿠폰',
+        discount: 3000,
+        minOrder: 18000,
+        expire: '2026.12.31까지',
+        tag: '배달 전용'
+      },
+      {
+        id: 'cp3',
+        title: '세트 메뉴 2,000원 할인 쿠폰',
+        discount: 2000,
+        minOrder: 20000,
+        expire: '2026.12.15까지',
+        tag: '세트 전용'
+      }
+    ];
+
+    function getCoupons() {
+      const saved = localStorage.getItem('tteokbokki_coupons');
+      if (!saved) {
+        localStorage.setItem('tteokbokki_coupons', JSON.stringify(defaultCoupons));
+        return defaultCoupons;
+      }
+      return JSON.parse(saved);
+    }
+
+    function saveCoupons(coupons) {
+      localStorage.setItem('tteokbokki_coupons', JSON.stringify(coupons));
+    }
+
+    function renderCoupons() {
+      const coupons = getCoupons();
+      const selectedCoupon = JSON.parse(localStorage.getItem('tteokbokki_selected_coupon') || 'null');
+      const selectedId = selectedCoupon && selectedCoupon.id ? selectedCoupon.id : '';
+
+      document.getElementById('couponCountText').textContent = `${coupons.length}장`;
+      const listBox = document.getElementById('couponListBox');
+
+      if (coupons.length === 0) {
+        listBox.innerHTML = '<div class="info-card"><p class="info-desc">보유 중인 쿠폰이 없습니다. 위에서 쿠폰 코드를 등록해보세요.</p></div>';
+        return;
+      }
+
+      listBox.innerHTML = coupons.map((cp) => {
+        const isSelected = cp.id === selectedId;
+        return `
+          <div class="coupon-card ${isSelected ? 'selected' : ''}">
+            <div class="coupon-card-top">
+              <span class="info-badge">${cp.tag}</span>
+              <span class="coupon-expire">${cp.expire}</span>
+            </div>
+            <div class="coupon-amount">${Number(cp.discount).toLocaleString()}원 할인</div>
+            <div class="coupon-title">${cp.title}</div>
+            <div class="coupon-condition">${Number(cp.minOrder).toLocaleString()}원 이상 주문 시 사용 가능</div>
+            <div class="coupon-card-actions">
+              <button type="button" class="coupon-apply-btn ${isSelected ? 'active' : ''}" data-select-id="${cp.id}">
+                ${isSelected ? '선택됨 (해제)' : '이 쿠폰 선택'}
+              </button>
+              <a href="../payment/payments.html" class="coupon-order-link">결제하러 가기 ></a>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.querySelectorAll('[data-select-id]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.dataset.selectId;
+          const currentSelected = JSON.parse(localStorage.getItem('tteokbokki_selected_coupon') || 'null');
+          if (currentSelected && currentSelected.id === targetId) {
+            localStorage.removeItem('tteokbokki_selected_coupon');
+            showToast('쿠폰 선택을 해제했습니다.');
+          } else {
+            const targetCoupon = coupons.find((item) => item.id === targetId);
+            if (targetCoupon) {
+              localStorage.setItem('tteokbokki_selected_coupon', JSON.stringify(targetCoupon));
+              showToast('결제 시 적용할 쿠폰을 선택했습니다.');
+            }
+          }
+          renderCoupons();
+        });
+      });
+    }
+
+    document.getElementById('registerCouponBtn').addEventListener('click', () => {
+      const input = document.getElementById('couponCodeInput');
+      const code = input.value.trim().toUpperCase();
+
+      if (!code) {
+        alert('쿠폰 코드를 입력해주세요.');
+        return;
+      }
+
+      const coupons = getCoupons();
+      const newId = `cp_${code}`;
+      if (coupons.some((item) => item.id === newId)) {
+        alert('이미 등록된 쿠폰 코드입니다.');
+        return;
+      }
+
+      const newCoupon = {
+        id: newId,
+        title: `${code} 특별 할인 쿠폰`,
+        discount: 1500,
+        minOrder: 12000,
+        expire: '2026.12.31까지',
+        tag: '배달 · 포장'
+      };
+
+      coupons.unshift(newCoupon);
+      saveCoupons(coupons);
+      input.value = '';
+      showToast('쿠폰이 등록되었습니다.');
+      renderCoupons();
+    });
+
+    const menuOpenBtn = document.getElementById('menuOpenBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const sideDrawer = document.getElementById('sideDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+
+    menuOpenBtn.addEventListener('click', () => {
+      renderDrawerAuthState();
+      sideDrawer.classList.add('open');
+      drawerOverlay.classList.add('open');
+    });
+    menuCloseBtn.addEventListener('click', () => {
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    });
+    drawerOverlay.addEventListener('click', () => {
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    });
+
+    renderDrawerAuthState();
+    renderCoupons();
+  </script>
+</body>
+</html>

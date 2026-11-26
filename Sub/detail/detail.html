@@ -38,9 +38,10 @@
             <i data-lucide="x"></i>
           </button>
         </div>
-        <div class="drawer-user-header" id="drawerUserInfo">로그인 하면 혜택을 줍니다</div>
+        <div class="drawer-user-header" id="drawerUserInfo">로그인하고 나만의 떡볶이 취향을 저장해보세요</div>
         <ul class="drawer-menu">
           <li><a href="../lists/list.html">떡볶이 메뉴</a></li>
+          <li><a href="../coupon/coupon.html">쿠폰함</a></li>
           <li><a href="../about/about.html">소개</a></li>
           <li><a href="../community/community.html">커뮤니티</a></li>
           <li id="drawerAuthItem"><a href="../login/login.html" id="drawerAuthLink">로그인</a></li>
@@ -58,6 +59,7 @@
         <p class="detail-desc" id="detailDesc">매콤달콤한 특제 비법 소스와 쫄깃한 밀떡이 어우러진 대표 메뉴입니다.</p>
         <p class="detail-price" id="detailPrice">14,000원</p>
 
+        <!-- 맵기 선택 -->
         <div class="detail-option-box">
           <span class="option-label">맵기 선택</span>
           <div class="hashtag-group" id="spicyGroup">
@@ -67,6 +69,128 @@
           </div>
         </div>
 
+        <!-- 토핑 추가 (중복 선택 가능) -->
+        <div class="detail-option-box">
+          <div class="option-header-row">
+            <span class="option-label">토핑 추가</span>
+            <span class="option-sub-text">중복 선택 가능</span>
+          </div>
+          <div class="extra-option-list" id="toppingGroup">
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="눈꽃 치즈" data-price="3000">
+                <span>눈꽃 치즈</span>
+              </span>
+              <span class="extra-option-price">+3,000원</span>
+            </label>
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="중국당면" data-price="3000">
+                <span>중국당면</span>
+              </span>
+              <span class="extra-option-price">+3,000원</span>
+            </label>
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="분모자" data-price="3500">
+                <span>분모자</span>
+              </span>
+              <span class="extra-option-price">+3,500원</span>
+            </label>
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="비엔나 소시지" data-price="2500">
+                <span>비엔나 소시지</span>
+              </span>
+              <span class="extra-option-price">+2,500원</span>
+            </label>
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="삶은 계란 2알" data-price="1500">
+                <span>삶은 계란 2알</span>
+              </span>
+              <span class="extra-option-price">+1,500원</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 사이드 추가 (중복 선택 가능) -->
+        <div class="detail-option-box">
+          <div class="option-header-row">
+            <span class="option-label">사이드 추가</span>
+            <span class="option-sub-text">선택 가능</span>
+          </div>
+          <div class="extra-option-list" id="sideGroup">
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="모듬 튀김 세트" data-price="6500">
+                <span>모듬 튀김 세트</span>
+              </span>
+              <span class="extra-option-price">+6,500원</span>
+            </label>
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="순대 & 내장" data-price="5000">
+                <span>순대 & 내장</span>
+              </span>
+              <span class="extra-option-price">+5,000원</span>
+            </label>
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="스팸 참치 주먹밥" data-price="4500">
+                <span>스팸 참치 주먹밥</span>
+              </span>
+              <span class="extra-option-price">+4,500원</span>
+            </label>
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="바삭 야끼만두" data-price="4000">
+                <span>바삭 야끼만두</span>
+              </span>
+              <span class="extra-option-price">+4,000원</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 음료 추가 (중복 선택 가능) -->
+        <div class="detail-option-box">
+          <div class="option-header-row">
+            <span class="option-label">음료 추가</span>
+            <span class="option-sub-text">선택 가능</span>
+          </div>
+          <div class="extra-option-list" id="drinkGroup">
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="쿨피스 복숭아 930ml" data-price="2500">
+                <span>쿨피스 복숭아 930ml</span>
+              </span>
+              <span class="extra-option-price">+2,500원</span>
+            </label>
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="코카콜라 500ml" data-price="2000">
+                <span>코카콜라 500ml</span>
+              </span>
+              <span class="extra-option-price">+2,000원</span>
+            </label>
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="칠성사이다 500ml" data-price="2000">
+                <span>칠성사이다 500ml</span>
+              </span>
+              <span class="extra-option-price">+2,000원</span>
+            </label>
+            <label class="extra-option-item">
+              <span class="extra-option-left">
+                <input type="checkbox" value="제로 콜라 500ml" data-price="2000">
+                <span>제로 콜라 500ml</span>
+              </span>
+              <span class="extra-option-price">+2,000원</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 수량 -->
         <div class="detail-qty-box">
           <span class="option-label">수량</span>
           <div class="qty-control">
@@ -74,6 +198,12 @@
             <span id="qtyValue">1</span>
             <button type="button" id="qtyPlus">+</button>
           </div>
+        </div>
+
+        <!-- 총 선택 금액 요약 -->
+        <div class="detail-total-box">
+          <span>총 주문 금액</span>
+          <strong id="detailTotalPrice">14,000원</strong>
         </div>
       </div>
 
@@ -115,7 +245,7 @@
           showToast('로그아웃되었습니다.');
         });
       } else {
-        drawerUserInfo.textContent = '로그인 하면 혜택을 줍니다';
+        drawerUserInfo.textContent = '로그인하고 나만의 떡볶이 취향을 저장해보세요';
         drawerUserInfo.classList.remove('logged-in');
         drawerAuthItem.innerHTML = '<a href="../login/login.html" id="drawerAuthLink">로그인</a>';
       }
@@ -148,6 +278,38 @@
     document.getElementById('detailDesc').textContent = currentItem.desc;
     document.getElementById('detailPrice').textContent = `${currentItem.price.toLocaleString()}원`;
 
+    function getCheckedOptions(containerId) {
+      const checked = Array.from(document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`));
+      return checked.map((input) => ({
+        name: input.value,
+        price: Number(input.dataset.price)
+      }));
+    }
+
+    function calculateUnitPrice() {
+      const toppings = getCheckedOptions('toppingGroup');
+      const sides = getCheckedOptions('sideGroup');
+      const drinks = getCheckedOptions('drinkGroup');
+      const extraSum = [...toppings, ...sides, ...drinks].reduce((sum, opt) => sum + opt.price, 0);
+      return currentItem.price + extraSum;
+    }
+
+    function updateDetailTotalPrice() {
+      const unitPrice = calculateUnitPrice();
+      const total = unitPrice * qty;
+      document.getElementById('detailTotalPrice').textContent = `${total.toLocaleString()}원`;
+    }
+
+    document.querySelectorAll('.extra-option-list input[type="checkbox"]').forEach((checkbox) => {
+      checkbox.addEventListener('change', (e) => {
+        const label = e.target.closest('.extra-option-item');
+        if (label) {
+          label.classList.toggle('checked', e.target.checked);
+        }
+        updateDetailTotalPrice();
+      });
+    });
+
     function getCart() {
       return JSON.parse(localStorage.getItem('tteokbokki_cart') || '[]');
     }
@@ -166,7 +328,18 @@
 
     function pushItemToCart() {
       const cart = getCart();
-      const cartKey = `${currentItem.id}_${selectedSpicy}`;
+      const toppings = getCheckedOptions('toppingGroup').map((o) => o.name);
+      const sides = getCheckedOptions('sideGroup').map((o) => o.name);
+      const drinks = getCheckedOptions('drinkGroup').map((o) => o.name);
+
+      const optionParts = [selectedSpicy];
+      if (toppings.length > 0) optionParts.push(`토핑: ${toppings.join(', ')}`);
+      if (sides.length > 0) optionParts.push(`사이드: ${sides.join(', ')}`);
+      if (drinks.length > 0) optionParts.push(`음료: ${drinks.join(', ')}`);
+
+      const optionLabel = optionParts.join(' / ');
+      const cartKey = `${currentItem.id}_${optionLabel}`;
+      const unitPrice = calculateUnitPrice();
       const existing = cart.find((c) => c.id === cartKey);
 
       if (existing) {
@@ -174,8 +347,8 @@
       } else {
         cart.push({
           id: cartKey,
-          name: `${currentItem.name} (${selectedSpicy})`,
-          price: currentItem.price,
+          name: `${currentItem.name} (${optionLabel})`,
+          price: unitPrice,
           img: currentItem.img,
           qty: qty
         });
@@ -195,12 +368,14 @@
       if (qty > 1) {
         qty -= 1;
         document.getElementById('qtyValue').textContent = qty;
+        updateDetailTotalPrice();
       }
     });
 
     document.getElementById('qtyPlus').addEventListener('click', () => {
       qty += 1;
       document.getElementById('qtyValue').textContent = qty;
+      updateDetailTotalPrice();
     });
 
     document.getElementById('addCartBtn').addEventListener('click', () => {
@@ -232,6 +407,7 @@
       drawerOverlay.classList.remove('open');
     });
 
+    updateDetailTotalPrice();
     updateCartBadge();
     renderDrawerAuthState();
   </script>

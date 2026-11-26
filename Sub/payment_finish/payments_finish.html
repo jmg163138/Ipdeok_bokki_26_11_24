@@ -12,59 +12,126 @@
 </head>
 <body>
   <div class="app-container">
-    <!-- 뒤로가기 -> 메인 페이지 -->
     <header class="header">
       <a href="../../index.html" class="icon-btn" aria-label="메인으로 돌아가기">
         <i data-lucide="chevron-left"></i>
       </a>
       <h1 class="header-title">결제 완료</h1>
-      <div style="width: 28px;"></div>
+      <button type="button" class="menu-btn" id="menuOpenBtn" aria-label="메뉴 열기">
+        <i data-lucide="menu"></i>
+      </button>
     </header>
+
+    <!-- 슬라이드 메뉴 -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <nav class="side-drawer" id="sideDrawer" aria-hidden="true">
+      <div class="side-drawer-inner">
+        <div class="drawer-header">
+          <button type="button" class="close-btn" id="menuCloseBtn" aria-label="메뉴 닫기">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div class="drawer-user-header" id="drawerUserInfo">로그인하고 나만의 떡볶이 취향을 저장해보세요</div>
+        <ul class="drawer-menu">
+          <li><a href="../lists/list.html">떡볶이 메뉴</a></li>
+          <li><a href="../coupon/coupon.html">쿠폰함</a></li>
+          <li><a href="../about/about.html">소개</a></li>
+          <li><a href="../community/community.html">커뮤니티</a></li>
+          <li id="drawerAuthItem"><a href="../login/login.html" id="drawerAuthLink">로그인</a></li>
+        </ul>
+      </div>
+    </nav>
 
     <main class="complete-main">
       <div class="complete-icon-circle">
         <i data-lucide="check"></i>
       </div>
-      <h2 class="complete-title">주문이 완료되었습니다!</h2>
-      <p class="complete-sub">매콤달콤하게 조리하여 빠르게 준비해 드리겠습니다.</p>
+      <h2 class="complete-title">주문이 완료되었습니다</h2>
+      <p class="complete-sub">맛있게 조리해서 빠르게 준비해드릴게요.</p>
 
-      <div class="complete-info-box">
-        <div class="summary-row">
-          <span>주문번호</span>
-          <strong id="orderNoText">ORD-123456</strong>
-        </div>
-        <div class="summary-row">
-          <span>주문유형</span>
-          <span id="orderTypeText">배달 주문</span>
-        </div>
-        <div class="summary-row">
-          <span>결제수단</span>
-          <span id="orderMethodText">신용/체크카드</span>
-        </div>
-        <div class="summary-row total">
-          <span>결제금액</span>
-          <strong id="orderTotalText">0원</strong>
-        </div>
-      </div>
+      <div class="complete-info-box" id="completeOrderBox"></div>
 
       <div class="bottom-fixed-bar">
-        <a href="../../index.html" class="primary-action-btn full" id="goHomeBtn">메인 페이지로 돌아가기</a>
+        <a href="../../index.html" class="primary-action-btn full">메인으로 돌아가기</a>
       </div>
     </main>
+
+    <div class="toast-msg" id="toastMsg">로그아웃되었습니다.</div>
   </div>
 
   <script>
     lucide.createIcons();
 
-    const lastOrder = JSON.parse(localStorage.getItem('last_order_info') || 'null');
-    if (lastOrder) {
-      document.getElementById('orderNoText').textContent = lastOrder.orderNo;
-      document.getElementById('orderTypeText').textContent = lastOrder.type;
-      if (lastOrder.method) {
-        document.getElementById('orderMethodText').textContent = lastOrder.method;
-      }
-      document.getElementById('orderTotalText').textContent = `${lastOrder.total.toLocaleString()}원`;
+    function getLoggedInUser() {
+      return JSON.parse(localStorage.getItem('tteokbokki_user') || 'null');
     }
+
+    function showToast(text) {
+      const toast = document.getElementById('toastMsg');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    function renderDrawerAuthState() {
+      const user = getLoggedInUser();
+      const drawerUserInfo = document.getElementById('drawerUserInfo');
+      const drawerAuthItem = document.getElementById('drawerAuthItem');
+
+      if (user && user.id) {
+        drawerUserInfo.textContent = `${user.id}님`;
+        drawerUserInfo.classList.add('logged-in');
+        drawerAuthItem.innerHTML = '<button type="button" class="drawer-logout-btn" id="drawerLogoutBtn">로그아웃</button>';
+        document.getElementById('drawerLogoutBtn').addEventListener('click', () => {
+          localStorage.removeItem('tteokbokki_user');
+          renderDrawerAuthState();
+          showToast('로그아웃되었습니다.');
+        });
+      } else {
+        drawerUserInfo.textContent = '로그인하고 나만의 떡볶이 취향을 저장해보세요';
+        drawerUserInfo.classList.remove('logged-in');
+        drawerAuthItem.innerHTML = '<a href="../login/login.html" id="drawerAuthLink">로그인</a>';
+      }
+    }
+
+    const order = JSON.parse(localStorage.getItem('tteokbokki_last_order') || 'null');
+    const box = document.getElementById('completeOrderBox');
+
+    if (order) {
+      const discountAmount = Number(order.discount || 0);
+      box.innerHTML = `
+        <div class="summary-row"><span>수령 방식</span><strong>${order.orderType}</strong></div>
+        <div class="summary-row"><span>수령 위치</span><span>${order.addr}</span></div>
+        <div class="summary-row"><span>연락처</span><span>${order.phone}</span></div>
+        <div class="summary-row"><span>결제 수단</span><span>${order.payMethod}</span></div>
+        <div class="summary-row"><span>적용 쿠폰</span><span>${order.couponName || '미사용'}</span></div>
+        <div class="summary-row"><span>쿠폰 할인</span><strong class="coupon-discount-text">-${discountAmount.toLocaleString()}원</strong></div>
+        <div class="summary-row total"><span>결제 금액</span><strong>${Number(order.finalPrice).toLocaleString()}원</strong></div>
+      `;
+    } else {
+      box.innerHTML = '<p class="info-desc">결제 내역이 확인되었습니다.</p>';
+    }
+
+    const menuOpenBtn = document.getElementById('menuOpenBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const sideDrawer = document.getElementById('sideDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+
+    menuOpenBtn.addEventListener('click', () => {
+      renderDrawerAuthState();
+      sideDrawer.classList.add('open');
+      drawerOverlay.classList.add('open');
+    });
+    menuCloseBtn.addEventListener('click', () => {
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    });
+    drawerOverlay.addEventListener('click', () => {
+      sideDrawer.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+    });
+
+    renderDrawerAuthState();
   </script>
 </body>
 </html>
